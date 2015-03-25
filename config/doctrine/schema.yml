@@ -1,0 +1,47 @@
+Evento:
+  tableName: evento
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+      notnull: true
+    descripcion:
+      type: string(255)
+    fecha_inicio:
+      type: date
+    fecha_fin:
+      type: date
+    repetir:
+      type: boolean
+      
+
+Agenda:
+  tableName: agenda
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+      notnull: true
+    nombre:
+      type: string(255)
+  relations:
+    Eventos:
+      class: Evento
+      foreignAlias: Eventos
+      refClass: AgendaEvento
+      
+AgendaEvento:
+  columns:
+    agenda_id:
+      type: integer(4)
+      primary: true
+    evento_id:
+      type: integer(4)
+      primary: true
+  relations:
+    Agenda:
+      foreignAlias: AgendaEventos
+    Evento:
+      foreignAlias: AgendaEventos
