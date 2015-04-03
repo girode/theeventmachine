@@ -1,7 +1,7 @@
 Evento:
   tableName: evento
   columns:
-    id:
+    id: 
       type: integer(4)
       autoincrement: true
       primary: true
@@ -14,23 +14,31 @@ Evento:
       type: date
     repetir:
       type: boolean
-      
+  relations:
+    Agendas:
+      class: Agenda
+      refClass: AgendaEvento
+      local: evento_id
+      foreign: agenda_id 
+      foreignAlias: Agendas
 
 Agenda:
   tableName: agenda
   columns:
-    id:
+    id: 
       type: integer(4)
       autoincrement: true
       primary: true
-      notnull: true
+      notnull: true  
     nombre:
       type: string(255)
   relations:
     Eventos:
       class: Evento
-      foreignAlias: Eventos
       refClass: AgendaEvento
+      local: agenda_id
+      foreign: evento_id
+      foreignAlias: Eventos
       
 AgendaEvento:
   columns:
@@ -42,6 +50,8 @@ AgendaEvento:
       primary: true
   relations:
     Agenda:
-      foreignAlias: AgendaEventos
+      local: agenda_id
+      foreign: id  
     Evento:
-      foreignAlias: AgendaEventos
+      local: evento_id
+      foreign: id

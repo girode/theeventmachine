@@ -10,23 +10,23 @@
  * @property date $fecha_inicio
  * @property date $fecha_fin
  * @property boolean $repetir
- * @property Doctrine_Collection $Eventos
- * @property Doctrine_Collection $AgendaEventos
+ * @property Doctrine_Collection $Agendas
+ * @property Doctrine_Collection $AgendaEvento
  * 
- * @method integer             getId()            Returns the current record's "id" value
- * @method string              getDescripcion()   Returns the current record's "descripcion" value
- * @method date                getFechaInicio()   Returns the current record's "fecha_inicio" value
- * @method date                getFechaFin()      Returns the current record's "fecha_fin" value
- * @method boolean             getRepetir()       Returns the current record's "repetir" value
- * @method Doctrine_Collection getEventos()       Returns the current record's "Eventos" collection
- * @method Doctrine_Collection getAgendaEventos() Returns the current record's "AgendaEventos" collection
- * @method Evento              setId()            Sets the current record's "id" value
- * @method Evento              setDescripcion()   Sets the current record's "descripcion" value
- * @method Evento              setFechaInicio()   Sets the current record's "fecha_inicio" value
- * @method Evento              setFechaFin()      Sets the current record's "fecha_fin" value
- * @method Evento              setRepetir()       Sets the current record's "repetir" value
- * @method Evento              setEventos()       Sets the current record's "Eventos" collection
- * @method Evento              setAgendaEventos() Sets the current record's "AgendaEventos" collection
+ * @method integer             getId()           Returns the current record's "id" value
+ * @method string              getDescripcion()  Returns the current record's "descripcion" value
+ * @method date                getFechaInicio()  Returns the current record's "fecha_inicio" value
+ * @method date                getFechaFin()     Returns the current record's "fecha_fin" value
+ * @method boolean             getRepetir()      Returns the current record's "repetir" value
+ * @method Doctrine_Collection getAgendas()      Returns the current record's "Agendas" collection
+ * @method Doctrine_Collection getAgendaEvento() Returns the current record's "AgendaEvento" collection
+ * @method Evento              setId()           Sets the current record's "id" value
+ * @method Evento              setDescripcion()  Sets the current record's "descripcion" value
+ * @method Evento              setFechaInicio()  Sets the current record's "fecha_inicio" value
+ * @method Evento              setFechaFin()     Sets the current record's "fecha_fin" value
+ * @method Evento              setRepetir()      Sets the current record's "repetir" value
+ * @method Evento              setAgendas()      Sets the current record's "Agendas" collection
+ * @method Evento              setAgendaEvento() Sets the current record's "AgendaEvento" collection
  * 
  * @package    theeventmachine
  * @subpackage model
@@ -62,12 +62,12 @@ abstract class BaseEvento extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Agenda as Eventos', array(
+        $this->hasMany('Agenda as Agendas', array(
              'refClass' => 'AgendaEvento',
              'local' => 'evento_id',
              'foreign' => 'agenda_id'));
 
-        $this->hasMany('AgendaEvento as AgendaEventos', array(
+        $this->hasMany('AgendaEvento', array(
              'local' => 'id',
              'foreign' => 'evento_id'));
     }
