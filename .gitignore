@@ -2,10 +2,10 @@
 # Referencias utiles:
 # http://stackoverflow.com/questions/5533050/gitignore-exclude-folder-but-include-specific-subfolder
 # http://stackoverflow.com/questions/343646/ignoring-directories-in-git-repos-on-windows
-config/databases.yml
-cache/
-log/
+/config/databases.yml
+/cache/
+/log/
 
 # Ignoro carpeta privada de Netbeans
 # http://stackoverflow.com/questions/1267403/which-netbeans-projects-files-should-go-into-source-control
-nbproyect/private/
+/nbproyect/private/
