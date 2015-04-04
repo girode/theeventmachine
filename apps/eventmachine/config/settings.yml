@@ -43,3 +43,7 @@ all:
 
     secure_module:          sfGuardAuth
     secure_action:          secure
+    
+    # Internationalization and Culture setting
+    i18n: true
+    default_culture: es

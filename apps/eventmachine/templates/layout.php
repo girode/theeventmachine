@@ -53,8 +53,8 @@
                   (<?php echo link_to('Salir', '@sf_guard_signout', array('class' => 'navbar-link')) ?>)
               </p>
           <?php else: ?>
-              <?php if (!include_slot('signin_form')): ?>
-                <p>Esta zona esta reservada para el formulario de login</p>
+              <?php if (has_slot('signin_form')): ?>
+                <?php include_slot('signin_form') ?>
               <?php endif; ?>
           <?php endif;?>
           

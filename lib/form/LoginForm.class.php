@@ -10,11 +10,13 @@
  */
 class LoginForm extends sfGuardFormSignin {
 
-    public function configure() {
+    public function minimize() {
         $this->getWidgetSchema()->getFormFormatter()->setRowFormat(
             "%error%%field%%help%%hidden_fields%\n"
         );
-        
+    }
+    
+    public function configure() {
         $this->widgetSchema['username']->setAttribute("placeholder" ,"Username or E-Mail");
         $this->widgetSchema['password']->setAttribute("placeholder" ,"Password");
                 
