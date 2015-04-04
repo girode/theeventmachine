@@ -4,17 +4,17 @@
 default:
   http_metas:
     content-type: text/html
-
+    
   metas:
-    #title:        symfony project
+    title:        The Event Machine
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [main.css, bootstrap.min.css, sticky-footer-navbar.css]
 
-  javascripts:    []
+  javascripts:    [jquery-1.11.2.min.js, bootstrap.min.js, moment.min.js, fullcalendar.min.js, es.js]
 
   has_layout:     true
   layout:         layout
