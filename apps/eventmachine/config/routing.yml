@@ -20,7 +20,7 @@ agenda:
 
 homepage:
   url:   /
-  param: { module: main, action: index }
+  param: { module: sfGuardAuth, action: index }
 
 # Gabriel (3/4/2015): Hay que ir sacando las rutas por default
 # generic rules
