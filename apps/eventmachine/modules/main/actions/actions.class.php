@@ -1,14 +1,14 @@
 <?php
 
 /**
- * agenda actions.
+ * main actions.
  *
  * @package    theeventmachine
- * @subpackage agenda
+ * @subpackage main
  * @author     grode
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class agendaActions extends sfActions
+class mainActions extends sfActions
 {
  /**
   * Executes index action
@@ -17,6 +17,6 @@ class agendaActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-      $this->usuario = $this->getUser()->getUsername();
+    
   }
 }

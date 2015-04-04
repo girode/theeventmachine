@@ -12,7 +12,7 @@
   </head>
 
    <body>
-   
+       
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -42,16 +42,16 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
+            <?php if ($sf_user->isAuthenticated()): ?>
+                <li><?php echo link_to('Salir', 'sf_guard_signout') ?></li>
+            <?php endif;?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
+    
     <!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>Agenda de %USUARIO%</h1>
-      </div>
         <?php echo $sf_content ?>
     </div>
 

@@ -1,17 +1,33 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
-# default rules
+#sfGuard Rules
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+agenda:
+  url:   /agenda
+  param: { module: agenda, action: index }
+
 homepage:
   url:   /
-  param: { module: agenda, action: index }
+  param: { module: main, action: index }
 
 # Gabriel (3/4/2015): Hay que ir sacando las rutas por default
 # generic rules
 # please, remove them by adding more specific rules
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*
+#default_index:
+#  url:   /:module
+#  param: { action: index }
+#
+#default:
+#  url:   /:module/:action/*
