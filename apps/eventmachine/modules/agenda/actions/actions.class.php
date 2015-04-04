@@ -18,28 +18,42 @@ class agendaActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
       $this->usuario = $this->getUser()->getUsername();
+      $this->form    = new EventoForm();
+//      $this->eventos = Metodo para obtener eventos mas recientes
   }
   
-  public function executeGetFormularioEventoAjax($request) {
-      if ($request->isXmlHttpRequest()) {
-        return $this->renderPartial('event_form', array('form' => new EventoForm() ));
-      }
-  }
+//  public function executeGetFormularioEventoAjax($request) {
+//      if ($request->isXmlHttpRequest()) {
+//        return $this->renderPartial('event_form', array('form' => new EventoForm() ));
+//      }
+//  }
   
-  public function executeProcesarFormularioEventoAjax($request) {
-        $this->redirect404Unless($request->isXmlHttpRequest());
-      
+    public function executeProcesarFormularioEventoAjax($request) {
+        
+        // Cargar nuevo evento solo para una agenda, la del usuario logueado 
+        
         $this->form = new EventoForm();
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest()) {
 
             $this->form->bind($request->getParameter('evento'));
             if ($this->form->isValid()) {
-                $event = $this->form->save();
-
-                return $this->redirect('@agenda');
+                
+                $evento = $this->form->save();
+                $response['errors'] = array();
+            }
+        } else {
+            foreach ($this->folderForm->getErrors() as $name => $error) {
+                $response['errors'][] = array(
+                    'field' => $name,
+                    'message' => $error->getMessage(),
+                );
             }
         }
+
+        $this->getResponse()->setContentType('application/json');
+
+        return $this->renderText(json_encode($response));
     }
 
 }

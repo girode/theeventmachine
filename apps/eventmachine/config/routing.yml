@@ -4,9 +4,14 @@
 
 #Ajax rules:
 
-get_formulario_evento_ajax:
-  url:   /getFormularioEventoAjax
-  param: { module: agenda, action: getFormularioEventoAjax }
+procesar_formulario_evento_ajax:
+  url:   /procesarFormularioEventoAjax
+  param: { module: agenda, action: procesarFormularioEventoAjax }
+  
+  
+#get_formulario_evento_ajax:
+#  url:   /getFormularioEventoAjax
+#  param: { module: agenda, action: getFormularioEventoAjax }
 
 #sfGuard rules:
     
