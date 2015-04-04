@@ -30,22 +30,34 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <span class="caret"></span></a>
-              <ul role="menu" class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            
             <?php if ($sf_user->isAuthenticated()): ?>
-                <li><?php echo link_to('Salir', 'sf_guard_signout') ?></li>
-            <?php endif;?>
+                <li class="dropdown">
+                  <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Options <span class="caret"></span></a>
+                  <ul role="menu" class="dropdown-menu">
+                    <li><a href="#">Compact View</a></li>
+                    <li><a href="#">Edit user data</a></li>
+                    <li><a href="#">Etc</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+          <?php endif;?>
           </ul>
+          <!-- signIn/signOut form/links -->  
+          <?php if ($sf_user->isAuthenticated()): ?>
+              <p class="navbar-text navbar-right">
+                  Signed in as <a href="#" class="navbar-link"><?php echo $sf_user->getName() ?></a>
+                  (<?php echo link_to('Salir', '@sf_guard_signout', array('class' => 'navbar-link')) ?>)
+              </p>
+          <?php else: ?>
+              <?php if (!include_slot('signin_form')): ?>
+                <p>Esta zona esta reservada para el formulario de login</p>
+              <?php endif; ?>
+          <?php endif;?>
+          
         </div><!--/.nav-collapse -->
       </div>
     </nav>
