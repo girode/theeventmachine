@@ -1,6 +1,9 @@
 <?php use_helper('I18N') ?>
 
-define some beautiful content for site
+<div class="jumbotron">
+  <h1>Welcome to the Event Machine Scheduling System</h1>
+  <p>Agendas revisited</p>
+</div>
 
 <?php slot('signin_form') ?>
 

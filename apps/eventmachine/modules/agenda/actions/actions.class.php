@@ -19,4 +19,27 @@ class agendaActions extends sfActions
   {
       $this->usuario = $this->getUser()->getUsername();
   }
+  
+  public function executeGetFormularioEventoAjax($request) {
+      if ($request->isXmlHttpRequest()) {
+        return $this->renderPartial('event_form', array('form' => new EventoForm() ));
+      }
+  }
+  
+  public function executeProcesarFormularioEventoAjax($request) {
+        $this->redirect404Unless($request->isXmlHttpRequest());
+      
+        $this->form = new EventoForm();
+
+        if ($request->isMethod('post')) {
+
+            $this->form->bind($request->getParameter('evento'));
+            if ($this->form->isValid()) {
+                $event = $this->form->save();
+
+                return $this->redirect('@agenda');
+            }
+        }
+    }
+
 }

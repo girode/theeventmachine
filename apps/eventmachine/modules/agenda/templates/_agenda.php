@@ -4,8 +4,8 @@
     </div>
     <div class="col-md-3">
         
-        <div id="event-form-div">
-            <!-- aca iria el formulario de nuevo evento -->
+        <div id="new-event-form-div">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventFormModal">Nuevo Evento</button>
         </div>
         
         <div id="ticker" class="list-group">
@@ -38,6 +38,20 @@
         
         // initialize the event scroller
 //        $("#eventTicker").jscroll();
+
+        $('#eventFormModal').on('show.bs.modal', function (event) {
+            
+            // var button = $(event.relatedTarget) // Button that triggered the modal
+            // var recipient = button.data('whatever') // Extract info from data-* attributes
+            var modal = $(this);
+            
+            // Si esta vacio
+            if( !( $.trim( modal.find('.modal-body').html() ).length ) ) { 
+                modal.find('.modal-body').load("<?php echo url_for('@get_formulario_evento_ajax')?>");
+            }
+            
+        });
+        
         
 
     });

@@ -26,3 +26,8 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+div#new-event-form-div {
+    margin-bottom: 11px;
+}
+

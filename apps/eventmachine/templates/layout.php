@@ -35,7 +35,7 @@
                 <li class="dropdown">
                   <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Options <span class="caret"></span></a>
                   <ul role="menu" class="dropdown-menu">
-                    <li><a href="#">Compact View</a></li>
+                    <li><a href="#">Hide header</a></li>
                     <li><a href="#">Edit user data</a></li>
                     <li><a href="#">Etc</a></li>
                     <li class="divider"></li>
@@ -44,7 +44,7 @@
                     <li><a href="#">One more separated link</a></li>
                   </ul>
                 </li>
-          <?php endif;?>
+            <?php endif;?>
           </ul>
           <!-- signIn/signOut form/links -->  
           <?php if ($sf_user->isAuthenticated()): ?>

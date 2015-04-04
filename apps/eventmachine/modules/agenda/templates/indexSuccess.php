@@ -5,6 +5,7 @@
     <h1>Agenda de <?php echo $usuario?></h1>
 </div>
 
+<?php include_partial('modal'); ?>
 <?php include_partial('agenda'); ?>
 
 

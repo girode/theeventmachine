@@ -1,7 +1,15 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
-#sfGuard Rules
+
+#Ajax rules:
+
+get_formulario_evento_ajax:
+  url:   /getFormularioEventoAjax
+  param: { module: agenda, action: getFormularioEventoAjax }
+
+#sfGuard rules:
+    
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }

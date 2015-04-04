@@ -10,16 +10,23 @@
  */
 class LoginForm extends sfGuardFormSignin {
 
-    public function minimize() {
-        $this->getWidgetSchema()->getFormFormatter()->setRowFormat(
-            "%error%%field%%help%%hidden_fields%\n"
-        );
-    }
+//    public function minimize() {
+//        $this->getWidgetSchema()->getFormFormatter()->setRowFormat(
+//            "%error%%field%%help%%hidden_fields%\n"
+//        );
+//    }
     
     public function configure() {
+        parent::configure();
+        
         $this->widgetSchema['username']->setAttribute("placeholder" ,"Username or E-Mail");
         $this->widgetSchema['password']->setAttribute("placeholder" ,"Password");
-                
+    
+        $this->widgetSchema->addFormFormatter('mini', new sfWidgetFormSchemaFormatterMiniSignIn($this->widgetSchema));
+        $this->widgetSchema->setFormFormatterName('mini');
+//        parent::setup();
+        
     }
+    
 
 }
