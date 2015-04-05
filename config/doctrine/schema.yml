@@ -52,6 +52,23 @@ Evento:
       foreign: agenda_id 
       foreignAlias: Agendas
 
+Perfil:
+  columns:
+    id: 
+      type: integer(4)
+      autoincrement: true
+      primary: true
+      notnull: true  
+    sf_guard_user_id: integer(4)
+    first_name: string(255)
+    last_name: string(255)
+    email_address: string(255)
+  relations:
+    User:
+      class: sfGuardUser
+      foreignType: one
+
+
 Agenda:
   tableName: agenda
   columns:

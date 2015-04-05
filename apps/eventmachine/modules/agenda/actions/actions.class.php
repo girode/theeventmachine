@@ -51,26 +51,32 @@ class agendaActions extends sfActions
         // Cargar nuevo evento solo para una agenda, la del usuario logueado 
         
         $this->form = new EventoForm();
-
+        $response = array(
+            'status' => 'error',
+            'errors' => array()
+        );
+        
+        
         if ($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest()) {
 
             $this->form->bind($request->getParameter('evento'));
             if ($this->form->isValid()) {
                 
                 $evento = $this->form->save();
-                $response['errors'] = array();
+                $response['status'] = 'ok';
+                
+            } else {
+                foreach ($this->form->getErrors() as $name => $error) {
+                    $response['errors'][] = array(
+                        'field' => $name,
+                        'message' => $error->getMessage(),
+                    );
+                }
             }
-        } else {
-            foreach ($this->folderForm->getErrors() as $name => $error) {
-                $response['errors'][] = array(
-                    'field' => $name,
-                    'message' => $error->getMessage(),
-                );
-            }
-        }
+            
+        } 
 
         $this->getResponse()->setContentType('application/json');
-
         return $this->renderText(json_encode($response));
     }
 
