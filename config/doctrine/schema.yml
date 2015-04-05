@@ -9,7 +9,7 @@ Evento:
     identificador: 
       type: integer
       notnull: false
-      comment: "Uniquely identifies the given event. Different instances of repeating events should all have the same id."
+      comment: "Uniquely identifies the given event. Different instances of repeating events should all have the same id."      
     titulo:
       name: titulo as title  
       type: string(255)
@@ -59,15 +59,17 @@ Perfil:
       autoincrement: true
       primary: true
       notnull: true  
-    sf_guard_user_id: integer(4)
-    first_name: string(255)
-    last_name: string(255)
-    email_address: string(255)
+    fecha_nacimiento:
+      type: date
+      notnull: false    
+    sf_guard_user_id: integer
   relations:
     User:
       class: sfGuardUser
       foreignType: one
-
+      local: sf_guard_user_id
+      foreign: id
+      
 
 Agenda:
   tableName: agenda
@@ -79,6 +81,9 @@ Agenda:
       notnull: true  
     nombre:
       type: string(255)
+    perfil_id:
+      type: integer(4)
+      notnull: true
   relations:
     Eventos:
       class: Evento
@@ -86,6 +91,13 @@ Agenda:
       local: agenda_id
       foreign: evento_id
       foreignAlias: Eventos
+    Perfil:
+      class: Perfil
+      foreignType: one
+      local: perfil_id
+      foreign: id
+      
+      
       
 AgendaEvento:
   columns:

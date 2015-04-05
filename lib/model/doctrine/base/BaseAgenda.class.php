@@ -7,16 +7,22 @@
  * 
  * @property integer $id
  * @property string $nombre
+ * @property integer $perfil_id
  * @property Doctrine_Collection $Eventos
+ * @property Perfil $Perfil
  * @property Doctrine_Collection $AgendaEvento
  * 
  * @method integer             getId()           Returns the current record's "id" value
  * @method string              getNombre()       Returns the current record's "nombre" value
+ * @method integer             getPerfilId()     Returns the current record's "perfil_id" value
  * @method Doctrine_Collection getEventos()      Returns the current record's "Eventos" collection
+ * @method Perfil              getPerfil()       Returns the current record's "Perfil" value
  * @method Doctrine_Collection getAgendaEvento() Returns the current record's "AgendaEvento" collection
  * @method Agenda              setId()           Sets the current record's "id" value
  * @method Agenda              setNombre()       Sets the current record's "nombre" value
+ * @method Agenda              setPerfilId()     Sets the current record's "perfil_id" value
  * @method Agenda              setEventos()      Sets the current record's "Eventos" collection
+ * @method Agenda              setPerfil()       Sets the current record's "Perfil" value
  * @method Agenda              setAgendaEvento() Sets the current record's "AgendaEvento" collection
  * 
  * @package    theeventmachine
@@ -39,6 +45,11 @@ abstract class BaseAgenda extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('perfil_id', 'integer', 4, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -48,6 +59,10 @@ abstract class BaseAgenda extends sfDoctrineRecord
              'refClass' => 'AgendaEvento',
              'local' => 'agenda_id',
              'foreign' => 'evento_id'));
+
+        $this->hasOne('Perfil', array(
+             'local' => 'perfil_id',
+             'foreign' => 'id'));
 
         $this->hasMany('AgendaEvento', array(
              'local' => 'id',

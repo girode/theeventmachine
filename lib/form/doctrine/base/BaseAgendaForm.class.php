@@ -17,12 +17,14 @@ abstract class BaseAgendaForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
       'nombre'       => new sfWidgetFormInputText(),
+      'perfil_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Perfil'), 'add_empty' => false)),
       'eventos_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Evento')),
     ));
 
     $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'nombre'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'perfil_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Perfil'))),
       'eventos_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Evento', 'required' => false)),
     ));
 

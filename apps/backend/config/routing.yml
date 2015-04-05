@@ -14,13 +14,9 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
-configuracion:
-  url: /configuracion    
-  param: { module: configuracion, action: index }  
-
 homepage:
   url:   /
-  param: { module: home, action: index }
+  param: { module: configuracion, action: index }
 
 # generic rules
 # please, remove them by adding more specific rules

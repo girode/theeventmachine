@@ -14,11 +14,13 @@ abstract class BaseAgendaFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'nombre'       => new sfWidgetFormFilterInput(),
+      'perfil_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Perfil'), 'add_empty' => true)),
       'eventos_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Evento')),
     ));
 
     $this->setValidators(array(
       'nombre'       => new sfValidatorPass(array('required' => false)),
+      'perfil_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Perfil'), 'column' => 'id')),
       'eventos_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Evento', 'required' => false)),
     ));
 
@@ -59,6 +61,7 @@ abstract class BaseAgendaFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'           => 'Number',
       'nombre'       => 'Text',
+      'perfil_id'    => 'ForeignKey',
       'eventos_list' => 'ManyKey',
     );
   }

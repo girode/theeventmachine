@@ -7,6 +7,9 @@ sfGuardUser:
     password:       admin
     is_super_admin: true
     Groups:         [Group_admin]
+    Perfil:
+       fecha_nacimiento: "1990-03-29"    
+      
 
 sfGuardGroup:
   Group_admin:
