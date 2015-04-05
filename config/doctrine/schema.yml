@@ -6,14 +6,44 @@ Evento:
       autoincrement: true
       primary: true
       notnull: true
-    descripcion:
+    identificador: 
+      type: integer
+      notnull: false
+      comment: "Uniquely identifies the given event. Different instances of repeating events should all have the same id."
+    titulo:
+      name: titulo as title  
       type: string(255)
-    fecha_inicio:
+      notnull: true
+      comment: "The text on an event's element"
+    diario:
+      name: diario as allDay  
+      type: boolean
+      notnull: false
+      comment: "Whether an event occurs at a specific time-of-day. This property affects whether an event's time is shown"
+    descripcion:  
+      type: string(255)
+      notnull: true
+    inicio:
+      name: inicio as start  
       type: date
-    fecha_fin:
+      notnull: true
+      comment: "The date/time an event begins"
+    fin:
+      name: fin as end  
       type: date
+      notnull: false
+      comment: "The exclusive date/time an event ends. It is the moment immediately after the event has ended. For example, if the last full day of an event is Thursday, the exclusive end of the event will be 00:00:00 on Friday!"
     repetir:
       type: boolean
+      notnull: false
+    url:
+      type: string(2000)
+      notnull: false
+      comment: "A URL that will be visited when this event is clicked by the user. For more information on controlling this behavior, see the eventClick callback."
+    editable:
+      type: boolean
+      notnull: false
+      comment: "Overrides the master editable option for this single event."
   relations:
     Agendas:
       class: Agenda

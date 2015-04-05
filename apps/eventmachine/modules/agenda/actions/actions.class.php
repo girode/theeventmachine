@@ -19,14 +19,32 @@ class agendaActions extends sfActions
   {
       $this->usuario = $this->getUser()->getUsername();
       $this->form    = new EventoForm();
-//      $this->eventos = Metodo para obtener eventos mas recientes
+      
+      // $this->getUser()->getAgenda();
+      
+//      $this->eventos = Doctrine::getTable('Evento')->findAll();
+//      
+//      var_dump($this->eventos); die;
   }
   
-//  public function executeGetFormularioEventoAjax($request) {
-//      if ($request->isXmlHttpRequest()) {
-//        return $this->renderPartial('event_form', array('form' => new EventoForm() ));
-//      }
-//  }
+  public function executeGetEventosAjax($request) {
+      if ($request->isXmlHttpRequest()) {
+        
+        $start = $request->getParameter('start');  
+        $end = $request->getParameter('end');  
+        
+        $q = Doctrine::getTable('Evento')
+                ->createQuery('e')
+                ->andWhere('e.start >= ?', $start)
+                ->andWhere('e.start <= ?', $end);
+        
+        $response = $q->fetchArray();
+        
+        $this->getResponse()->setContentType('application/json');
+
+        return $this->renderText(json_encode($response));
+      }
+  }
   
     public function executeProcesarFormularioEventoAjax($request) {
         

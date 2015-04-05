@@ -33,7 +33,7 @@
         // initialize the calendar...
 
         $("#calendar").fullCalendar({
-            // put your options and callbacks here
+            events: '<?php echo url_for('@get_eventos_ajax')?>'
         })
         
         // initialize the event scroller

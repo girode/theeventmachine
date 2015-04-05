@@ -4,6 +4,10 @@
 
 #Ajax rules:
 
+get_eventos_ajax:
+  url:   /getEventosAjax
+  param: { module: agenda, action: getEventosAjax }
+
 procesar_formulario_evento_ajax:
   url:   /procesarFormularioEventoAjax
   param: { module: agenda, action: procesarFormularioEventoAjax }

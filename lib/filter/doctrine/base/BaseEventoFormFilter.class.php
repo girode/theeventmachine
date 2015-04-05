@@ -13,19 +13,29 @@ abstract class BaseEventoFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'descripcion'  => new sfWidgetFormFilterInput(),
-      'fecha_inicio' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'fecha_fin'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'repetir'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'agendas_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Agenda')),
+      'identificador' => new sfWidgetFormFilterInput(),
+      'title'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'allDay'        => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'descripcion'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'start'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'end'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'repetir'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'url'           => new sfWidgetFormFilterInput(),
+      'editable'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'agendas_list'  => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Agenda')),
     ));
 
     $this->setValidators(array(
-      'descripcion'  => new sfValidatorPass(array('required' => false)),
-      'fecha_inicio' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
-      'fecha_fin'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
-      'repetir'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'agendas_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Agenda', 'required' => false)),
+      'identificador' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'title'         => new sfValidatorPass(array('required' => false)),
+      'allDay'        => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'descripcion'   => new sfValidatorPass(array('required' => false)),
+      'start'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'end'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'repetir'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'url'           => new sfValidatorPass(array('required' => false)),
+      'editable'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'agendas_list'  => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Agenda', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('evento_filters[%s]');
@@ -63,12 +73,17 @@ abstract class BaseEventoFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'           => 'Number',
-      'descripcion'  => 'Text',
-      'fecha_inicio' => 'Date',
-      'fecha_fin'    => 'Date',
-      'repetir'      => 'Boolean',
-      'agendas_list' => 'ManyKey',
+      'id'            => 'Number',
+      'identificador' => 'Number',
+      'title'         => 'Text',
+      'allDay'        => 'Boolean',
+      'descripcion'   => 'Text',
+      'start'         => 'Date',
+      'end'           => 'Date',
+      'repetir'       => 'Boolean',
+      'url'           => 'Text',
+      'editable'      => 'Boolean',
+      'agendas_list'  => 'ManyKey',
     );
   }
 }

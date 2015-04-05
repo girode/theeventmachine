@@ -29,7 +29,7 @@
     $(document).ready(function (){
        $("div.modal-content form").submit(function (event) {
            event.preventDefault();
-           $form = $(this);
+           var $form = $(this);
            
             $.post($form.attr('action'), $form.serialize(), function (data) {
                 var length = data.errors.length;

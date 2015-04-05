@@ -15,21 +15,31 @@ abstract class BaseEventoForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'           => new sfWidgetFormInputHidden(),
-      'descripcion'  => new sfWidgetFormInputText(),
-      'fecha_inicio' => new sfWidgetFormDate(),
-      'fecha_fin'    => new sfWidgetFormDate(),
-      'repetir'      => new sfWidgetFormInputCheckbox(),
-      'agendas_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Agenda')),
+      'id'            => new sfWidgetFormInputHidden(),
+      'identificador' => new sfWidgetFormInputText(),
+      'title'         => new sfWidgetFormInputText(),
+      'allDay'        => new sfWidgetFormInputCheckbox(),
+      'descripcion'   => new sfWidgetFormInputText(),
+      'start'         => new sfWidgetFormDate(),
+      'end'           => new sfWidgetFormDate(),
+      'repetir'       => new sfWidgetFormInputCheckbox(),
+      'url'           => new sfWidgetFormTextarea(),
+      'editable'      => new sfWidgetFormInputCheckbox(),
+      'agendas_list'  => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Agenda')),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'descripcion'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'fecha_inicio' => new sfValidatorDate(array('required' => false)),
-      'fecha_fin'    => new sfValidatorDate(array('required' => false)),
-      'repetir'      => new sfValidatorBoolean(array('required' => false)),
-      'agendas_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Agenda', 'required' => false)),
+      'id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'identificador' => new sfValidatorInteger(array('required' => false)),
+      'title'         => new sfValidatorString(array('max_length' => 255)),
+      'allDay'        => new sfValidatorBoolean(array('required' => false)),
+      'descripcion'   => new sfValidatorString(array('max_length' => 255)),
+      'start'         => new sfValidatorDate(),
+      'end'           => new sfValidatorDate(array('required' => false)),
+      'repetir'       => new sfValidatorBoolean(array('required' => false)),
+      'url'           => new sfValidatorString(array('max_length' => 2000, 'required' => false)),
+      'editable'      => new sfValidatorBoolean(array('required' => false)),
+      'agendas_list'  => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Agenda', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('evento[%s]');
