@@ -4,6 +4,22 @@
 # # 
 # # See documentation for your ORM's *:data-load task for more information.
 
+Evento:
+  EventoGabo:
+    inicio: "2015-04-06"   
+    titulo: "Evento de Gabriel"
+    descripcion: "Evento de Prueba"
+    Agendas: [AgendaGabo]
+
+Perfil:
+  PerfilGabriel:
+    fecha_nacimiento: "1990-03-29"
+
+Agenda:
+  AgendaGabo:
+    nombre:  "Agenda de Gabriel"
+    Perfil:  [PerfilGabriel]
+
 sfGuardUser:
   User_admin:
     first_name:     Gabriel
@@ -13,13 +29,8 @@ sfGuardUser:
     password:       admin
     is_super_admin: true
     Groups:         [Group_admin]
-    Perfil:
-       fecha_nacimiento: "1990-03-29"
-       Agenda:
-         nombre: "Agenda de Gabriel"    
-         
-      
-
+    Perfil:         [PerfilGabriel]    
+    
 sfGuardGroup:
   Group_admin:
     name:           admin
@@ -30,3 +41,8 @@ sfGuardPermission:
   Permission_admin:
     name:           admin
     description:    Administrator permission
+
+    
+  
+  
+    
