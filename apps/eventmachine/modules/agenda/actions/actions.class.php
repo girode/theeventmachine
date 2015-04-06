@@ -19,12 +19,7 @@ class agendaActions extends sfActions
   {
       $this->usuario = $this->getUser()->getUsername();
       $this->form    = new EventoForm();
-      
-      // $this->getUser()->getAgenda();
-      
-//      $this->eventos = Doctrine::getTable('Evento')->findAll();
-//      
-//      var_dump($this->eventos); die;
+//      var_dump($this->getUser()->getAgenda()->getId()); die;
   }
   
   public function executeGetEventosAjax($request) {
@@ -32,9 +27,12 @@ class agendaActions extends sfActions
         
         $start = $request->getParameter('start');  
         $end = $request->getParameter('end');  
+        $agenda_id = $this->getUser()->getAgenda()->getId();
         
         $q = Doctrine::getTable('Evento')
                 ->createQuery('e')
+                ->innerJoin('e.Agendas a')
+                ->where('a.id = ?', $agenda_id)
                 ->andWhere('e.start >= ?', $start)
                 ->andWhere('e.start <= ?', $end);
         
