@@ -1,0 +1,7 @@
+Agenda:
+  AgendaGabo:
+    nombre:  "Agenda de Gabriel"
+    Perfil:  [PerfilGabriel]
+  AgendaGral:
+    nombre: "Agenda General"
+    Perfil:  [PerfilPais]

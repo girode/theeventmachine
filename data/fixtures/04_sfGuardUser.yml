@@ -1,0 +1,21 @@
+sfGuardUser:
+  User_admin:
+    first_name:     Gabriel
+    last_name:      Rode
+    email_address:  gabriel_rode@hotmail.com
+    username:       admin
+    password:       admin
+    is_super_admin: true
+    Groups:         [Group_admin]
+    Perfil:         [PerfilGabriel]    
+    
+sfGuardGroup:
+  Group_admin:
+    name:           admin
+    description:    Administrator group
+    Permissions:    [Permission_admin]
+
+sfGuardPermission:
+  Permission_admin:
+    name:           admin
+    description:    Administrator permission

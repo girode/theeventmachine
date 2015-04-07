@@ -13,9 +13,12 @@ class EventoForm extends BaseEventoForm {
     public function configure() {
         parent::configure();
         
+        if($this->getOption('usuario-simple')){
+            unset($this['agendas_list']);
+        }
+        
         $this->widgetSchema->addFormFormatter('bootstrap', new sfWidgetFormSchemaFormatterTwitterBootstrap($this->widgetSchema));
         $this->widgetSchema->setFormFormatterName('bootstrap');
-        
         
     }
 

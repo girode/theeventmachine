@@ -2,7 +2,7 @@
 
 <div class="jumbotron">
   <h1>Welcome to the Event Machine Scheduling System</h1>
-  <p>Agendas revisited</p>
+  <p>Your agenda made Simple</p>
 </div>
 
 <?php slot('signin_form') ?>
