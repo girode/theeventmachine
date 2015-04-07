@@ -16,4 +16,25 @@ class EventoTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Evento');
     }
+    
+       
+    public function findByAgendaIdQuery($agenda_id)
+    {
+        return $this->createQuery('e')
+                    ->innerJoin('e.Agendas a')
+                    ->where('a.id = ?', $agenda_id)
+                    ->orderBy("e.inicio DESC");   
+    }
+    
+    public function findByAgendaId($agenda_id, $hydrationMode = DOCTRINE::HYDRATE_RECORD)
+    { 
+        return $this
+                ->findByAgendaIdQuery($agenda_id)
+                ->execute(array(), $hydrationMode);
+        
+    }
+    
+    
+    
+    
 }

@@ -17,11 +17,14 @@ class agendaActions extends sfActions {
      */
     public function executeIndex(sfWebRequest $request) {
         $this->usuario = $this->getUser()->getName();
-        // $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
 
         $this->form = new EventoForm(null, array(
             "usuario-simple" => true
         ));
+        
+        $this->eventos = Doctrine::getTable('Evento')
+                ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
+                
     }
 
     public function executeGetEventosAjax($request) {
