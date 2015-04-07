@@ -40,8 +40,8 @@ class agendaActions extends sfActions {
                     ->createQuery('e')
                     ->innerJoin('e.Agendas a')
                     ->whereIn('a.id', array($agenda_usuario_id, $agenda_general_id))
-                    ->andWhere('e.start >= ?', $start)
-                    ->andWhere('e.start <= ?', $end);
+                    ->andWhere('e.inicio >= ?', $start)
+                    ->andWhere('e.inicio <= ?', $end);
 
             $response = $q->fetchArray();
 

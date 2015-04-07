@@ -33,7 +33,15 @@
         // initialize the calendar...
 
         $("#calendar").fullCalendar({
-            events: '<?php echo url_for('@get_eventos_ajax')?>'
+            events: {
+                url: '<?php echo url_for('@get_eventos_ajax')?>',
+                eventDataTransform: function( eventData ) {
+                    return {
+                        title: eventData.titulo,
+                        start: eventData.inicio
+                    };
+                }        
+            }
         })
         
         // initialize the event scroller

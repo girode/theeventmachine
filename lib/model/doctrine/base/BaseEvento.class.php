@@ -7,11 +7,11 @@
  * 
  * @property integer $id
  * @property integer $identificador
- * @property string $title
- * @property boolean $allDay
+ * @property string $titulo
+ * @property boolean $diario
  * @property string $descripcion
- * @property date $start
- * @property date $end
+ * @property date $inicio
+ * @property date $fin
  * @property boolean $repetir
  * @property string $url
  * @property boolean $editable
@@ -20,11 +20,11 @@
  * 
  * @method integer             getId()            Returns the current record's "id" value
  * @method integer             getIdentificador() Returns the current record's "identificador" value
- * @method string              getTitle()         Returns the current record's "title" value
- * @method boolean             getAllDay()        Returns the current record's "allDay" value
+ * @method string              getTitulo()        Returns the current record's "titulo" value
+ * @method boolean             getDiario()        Returns the current record's "diario" value
  * @method string              getDescripcion()   Returns the current record's "descripcion" value
- * @method date                getStart()         Returns the current record's "start" value
- * @method date                getEnd()           Returns the current record's "end" value
+ * @method date                getInicio()        Returns the current record's "inicio" value
+ * @method date                getFin()           Returns the current record's "fin" value
  * @method boolean             getRepetir()       Returns the current record's "repetir" value
  * @method string              getUrl()           Returns the current record's "url" value
  * @method boolean             getEditable()      Returns the current record's "editable" value
@@ -32,11 +32,11 @@
  * @method Doctrine_Collection getAgendaEvento()  Returns the current record's "AgendaEvento" collection
  * @method Evento              setId()            Sets the current record's "id" value
  * @method Evento              setIdentificador() Sets the current record's "identificador" value
- * @method Evento              setTitle()         Sets the current record's "title" value
- * @method Evento              setAllDay()        Sets the current record's "allDay" value
+ * @method Evento              setTitulo()        Sets the current record's "titulo" value
+ * @method Evento              setDiario()        Sets the current record's "diario" value
  * @method Evento              setDescripcion()   Sets the current record's "descripcion" value
- * @method Evento              setStart()         Sets the current record's "start" value
- * @method Evento              setEnd()           Sets the current record's "end" value
+ * @method Evento              setInicio()        Sets the current record's "inicio" value
+ * @method Evento              setFin()           Sets the current record's "fin" value
  * @method Evento              setRepetir()       Sets the current record's "repetir" value
  * @method Evento              setUrl()           Sets the current record's "url" value
  * @method Evento              setEditable()      Sets the current record's "editable" value
@@ -64,13 +64,13 @@ abstract class BaseEvento extends sfDoctrineRecord
              'notnull' => false,
              'comment' => 'Uniquely identifies the given event. Different instances of repeating events should all have the same id.',
              ));
-        $this->hasColumn('titulo as title', 'string', 255, array(
+        $this->hasColumn('titulo', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
              'comment' => 'The text on an event\'s element',
              'length' => 255,
              ));
-        $this->hasColumn('diario as allDay', 'boolean', null, array(
+        $this->hasColumn('diario', 'boolean', null, array(
              'type' => 'boolean',
              'notnull' => false,
              'comment' => 'Whether an event occurs at a specific time-of-day. This property affects whether an event\'s time is shown',
@@ -80,12 +80,12 @@ abstract class BaseEvento extends sfDoctrineRecord
              'notnull' => true,
              'length' => 255,
              ));
-        $this->hasColumn('inicio as start', 'date', null, array(
+        $this->hasColumn('inicio', 'date', null, array(
              'type' => 'date',
              'notnull' => true,
              'comment' => 'The date/time an event begins',
              ));
-        $this->hasColumn('fin as end', 'date', null, array(
+        $this->hasColumn('fin', 'date', null, array(
              'type' => 'date',
              'notnull' => false,
              'comment' => 'The exclusive date/time an event ends. It is the moment immediately after the event has ended. For example, if the last full day of an event is Thursday, the exclusive end of the event will be 00:00:00 on Friday!',
