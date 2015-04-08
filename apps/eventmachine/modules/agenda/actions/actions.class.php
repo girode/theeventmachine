@@ -17,8 +17,11 @@ class agendaActions extends sfActions {
      */
     public function executeIndex(sfWebRequest $request) {
         $this->usuario = $this->getUser()->getName();
-
-        $this->form = new EventoForm(null, array(
+        
+        $evento = new Evento();
+        $evento->setInicio(date("Y-m-d"));
+        
+        $this->form = new EventoForm($evento, array(
             "usuario-simple" => true
         ));
         
@@ -60,6 +63,7 @@ class agendaActions extends sfActions {
             "usuario-simple" => true
         ));
         
+               
         $response = array(
             'status' => 'error',
             'errors' => array()
@@ -69,6 +73,7 @@ class agendaActions extends sfActions {
         if ($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest()) {
 
             $this->form->bind($request->getParameter('evento'));
+            
             if ($this->form->isValid()) {
 
                 $evento = $this->form->save();
@@ -81,19 +86,26 @@ class agendaActions extends sfActions {
                 $evento->Agendas->add($a);
                 $evento->save();
                 
-                $response['status'] = 'ok';
+                $response['status']  = 'ok';
+                $response['evento']  = $evento->toArray();
+                $response['newHTML'] = $this->getPartial('evento', array("evento" => $evento));
+                
             } else {
+                
                 foreach ($this->form->getErrorSchema() as $name => $error) {
                     $response['errors'][] = array(
                         'field' => $name,
                         'message' => $error->getMessage(),
                     );
                 }
+                
             }
+            
+            $this->getResponse()->setContentType('application/json');
+            return $this->renderText(json_encode($response));
         }
 
-        $this->getResponse()->setContentType('application/json');
-        return $this->renderText(json_encode($response));
+        
     }
 
 }

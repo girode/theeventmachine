@@ -33,16 +33,25 @@
            
             $.post($form.attr('action'), $form.serialize(), function (data) {
                 var length = data.errors.length;
+                
+                // hay errores
                 if (length) {
                     for (var i = 0; i < length; i++) {
                         console.log(data.errors[i]);
                     }
                 } else {
-                    // Show success notification
-                    alert("grabe ok!");
+                    $("div#ticker.list-group > div.list-group").prepend(data.newHTML);
+                    $("#calendar").fullCalendar('renderEvent', {
+                        title: data.evento.titulo,
+                        start: data.evento.inicio
+                    });
+                    $('#eventFormModal').modal('hide');
                 }
             }, 'json');
 
        }); 
+       
+       
+       
     });
 </script>    
