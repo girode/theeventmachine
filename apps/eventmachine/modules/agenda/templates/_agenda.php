@@ -10,22 +10,9 @@
         
         <div id="ticker" class="list-group">
             <div class="list-group">
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">List group item heading</h4>
-                  <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">List group item heading</h4>
-                  <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">List group item heading</h4>
-                  <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                </a>
                 <?php foreach($eventos as $evento): ?>
                     <?php include_partial("evento", array("evento" => $evento)); ?>
                 <?php endforeach; ?>
-                <div id="insertionPoint"></div>
             </div>
         </div>
     </div>
