@@ -15,4 +15,8 @@ class Evento extends BaseEvento
     public function __toString() {
         return $this->getTitulo();
     }
+    
+    public function getInicioFormateado() {
+        return date('d/m/Y', strtotime($this->getInicio()));
+    }
 }
