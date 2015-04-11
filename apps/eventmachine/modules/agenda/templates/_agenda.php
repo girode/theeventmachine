@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventFormModal">Nuevo Evento</button>
         </div>
         
-        <div id="ticker" class="list-group">
+        <div id="ticker">
             <div class="list-group">
                 <?php foreach($eventos as $evento): ?>
                     <?php include_partial("evento", array("evento" => $evento)); ?>
