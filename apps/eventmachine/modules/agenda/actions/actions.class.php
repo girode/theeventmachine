@@ -25,20 +25,20 @@ class agendaActions extends sfActions {
             "usuario-simple" => true
         ));
         
-//        $this->eventos = Doctrine::getTable('Evento')
-//                ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
+        $this->eventos = Doctrine::getTable('Evento')
+                ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
         
-        $agendaGeneral = Doctrine::getTable('Agenda')
-                    ->findOneByNombre("Agenda General");
-
-        $agenda_general_id = $agendaGeneral->getId();
-        $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
-        
-        $this->eventos = Doctrine::getTable('Evento')->createQuery('e')
-                    ->innerJoin('e.Agendas a')
-                    ->whereIn('a.id', array($agenda_usuario_id, $agenda_general_id))
-                    ->orderBy("e.inicio DESC")
-                    ->execute();
+//        $agendaGeneral = Doctrine::getTable('Agenda')
+//                    ->findOneByNombre("Agenda General");
+//
+//        $agenda_general_id = $agendaGeneral->getId();
+//        $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
+//        
+//        $this->eventos = Doctrine::getTable('Evento')->createQuery('e')
+//                    ->innerJoin('e.Agendas a')
+//                    ->whereIn('a.id', array($agenda_usuario_id, $agenda_general_id))
+//                    ->orderBy("e.inicio DESC")
+//                    ->execute();
         
                 
     }

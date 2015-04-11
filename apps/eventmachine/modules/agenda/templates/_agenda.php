@@ -1,12 +1,10 @@
 <div class="row">
     <div class="col-md-9" id="calendar"></div>
     <div class="col-md-3 list-group" id="ticker">
-<!--        <div id="aaa">-->
-            <div id="eventList">
+        <div id="eventList">
                 <?php foreach($eventos as $evento): ?>
                     <?php include_partial("evento", array("evento" => $evento)); ?>
                 <?php endforeach; ?>
-<!--            </div>-->
         </div>
     </div>
 </div>
