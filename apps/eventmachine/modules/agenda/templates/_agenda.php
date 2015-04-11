@@ -1,15 +1,19 @@
 <div class="row">
     <div class="col-md-9" id="calendar"></div>
     <div class="col-md-3 list-group" id="ticker">
-<!--        <div id="new-event-form-div">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventFormModal">Nuevo Evento</button>
-        </div>-->
-        <?php foreach($eventos as $evento): ?>
-            <?php include_partial("evento", array("evento" => $evento)); ?>
-        <?php endforeach; ?>
+<!--        <div id="aaa">-->
+            <div id="eventList">
+                <?php foreach($eventos as $evento): ?>
+                    <?php include_partial("evento", array("evento" => $evento)); ?>
+                <?php endforeach; ?>
+<!--            </div>-->
+        </div>
     </div>
 </div>
 
+<!--        <div id="new-event-form-div">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventFormModal">Nuevo Evento</button>
+        </div>-->
 
 <script type="text/javascript">
     $(document).ready(function() {

@@ -36,31 +36,26 @@ Make columns equal height
 http://stackoverflow.com/questions/19695784/how-can-i-make-bootstrap-columns-all-the-same-height
 */
 
+
 .row {
     display: table;
 }
 
-/*
+
 .row [class*="col-"] {
     float: none;
     display: table-cell;
     vertical-align: top;
 }
-*/
+
 
 div#ticker.col-md-3.list-group {
-    float: none;
-    display: table-cell;
-    vertical-align: top;
+    position:relative;
 }
 
-
-
-
-/* 
-End - Make columns equal height
-*/
-
-div#ticker.col-md-3.list-group {
+div#eventList {
+    position:absolute;
+    height: 100%;
     overflow: scroll;
 }
+
