@@ -87,3 +87,16 @@ div#eventList {
     overflow: auto;
 }
 
+div#eventList > a.list-group-item > button.removeEventButton {
+    position:absolute;
+    top: 10%;
+    left: 90%;
+}
+
+div#eventList > a.list-group-item:hover > button.removeEventButton {
+    visibility: visible;
+}
+
+
+
+

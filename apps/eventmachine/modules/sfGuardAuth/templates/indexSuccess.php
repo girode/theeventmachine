@@ -1,8 +1,9 @@
 <?php use_helper('I18N') ?>
 
 <div class="jumbotron">
-  <h1>Welcome to the Event Machine Scheduling System</h1>
-  <p>Your agenda made Simple</p>
+  <h1>The Event Machine</h1>
+  <h2>Scheduling System</h2>
+  <p>Agendas made simple</p>
 </div>
 
 <?php slot('signin_form') ?>
