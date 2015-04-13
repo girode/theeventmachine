@@ -16,7 +16,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions {
         $user = $this->getUser();
         
         if ($user->isAuthenticated()) {
-            return $this->redirect('@homepage');
+            return $this->redirect('@agenda');
         }
 
         $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin');
@@ -28,7 +28,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions {
     public function executeSignin($request) {
         $user = $this->getUser();
         if ($user->isAuthenticated()) {
-            return $this->redirect('@homepage');
+            return $this->redirect('@agenda');
         }
 
         $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin');

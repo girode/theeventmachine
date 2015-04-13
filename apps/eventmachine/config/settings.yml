@@ -39,7 +39,7 @@ all:
 
     # Change the default login and secure modules
     login_module:           sfGuardAuth
-    login_action:           signin
+    login_action:           index
 
     secure_module:          sfGuardAuth
     secure_action:          secure

@@ -4,5 +4,5 @@
 all:
   sf_guard_plugin:
     signin_form: LoginForm  
-    success_signin_url:      @agenda     # the plugin use the referer as default
-    success_signout_url:     @homepage   # the plugin use the referer as default
+#    success_signin_url:      @agenda     # the plugin use the referer as default
+#    success_signout_url:     @homepage   # the plugin use the referer as default
