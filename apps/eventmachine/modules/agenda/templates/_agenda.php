@@ -81,7 +81,7 @@
 
         
         // initialize the event scroller
-//        $("#eventTicker").jscroll();
+        $("div#eventList").jscroll();
 
 //        $('#eventFormModal').on('show.bs.modal', function (event) {
 //            

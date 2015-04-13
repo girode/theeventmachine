@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [bootstrap.min.css, sticky-footer-navbar.css]
 
-  javascripts:    [jquery-1.11.2.min.js, bootstrap.min.js, moment.min.js, fullcalendar.min.js, es.js]
+  javascripts:    [jquery-1.11.2.min.js, bootstrap.min.js, moment.min.js, fullcalendar.min.js, es.js, jquery.jscroll.min.js]
 
   has_layout:     true
   layout:         layout
