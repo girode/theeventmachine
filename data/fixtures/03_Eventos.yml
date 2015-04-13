@@ -4,6 +4,14 @@ Evento:
     titulo: "Evento de Gabriel"
     descripcion: "Evento de Prueba"
     Agendas: [AgendaGabo]
+# Starts at the beginning of the line (no whitespace before)
+<?php for ($i = 1; $i <= 30; $i++): ?>
+  evento_<?php echo $i ?>:
+    inicio: "2015-04-<?php echo $i ?>"    
+    titulo: "Evento <?php echo $i ?>"
+    descripcion: "Evento <?php echo $i ?>"
+    Agendas: [AgendaGabo]
+<?php endfor ?>
   #Jueves 1 de enero:  
   FeriadoAnioNuevo:
     inicio: "2015-01-01"    

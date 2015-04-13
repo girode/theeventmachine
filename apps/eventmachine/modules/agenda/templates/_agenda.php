@@ -20,7 +20,8 @@
                     return {
                         title: eventData.titulo,
                         start: eventData.inicio,
-                        end: eventData.fin
+                        end: eventData.fin,
+                        id: eventData.id
                     };
                 }        
             }
@@ -64,6 +65,14 @@
                     } else {
                         // Saco elemento padre (y a mi mismo) del DOM
                         boton.parent().remove();
+                        
+                        // Elimino evento del calendario
+                        // TODO: Recuperar el identificador (no es el id) del 
+                        // evento y eliminarlo usando .fullCalendar( 'removeEvents' [, idOrFilter ] )
+                        
+                        // $("#calendar").fullCalendar( 'refetchEvents' );
+                        $("#calendar").fullCalendar( 'removeEvents' , evtId);
+                        
                     }
                 }
             });
