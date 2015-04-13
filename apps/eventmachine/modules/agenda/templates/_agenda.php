@@ -40,8 +40,34 @@
         $("div.fc-toolbar > div.fc-right").append(createButton);
 
         /* Manejo el boton cerrar de cada evento */
-        $("div#eventList > a.list-group-item > button.removeEventButton").click( function() {
-            alert("Voy a cerrar el evento!");
+        
+        $( "div#eventList" ).on("click", "button", function( event ) {
+            event.preventDefault();
+            var boton = $(this);
+            var evtId = boton.siblings("input").val();
+            
+            // Lanzo ajax req para eliminar el evento. Si me da ok, entonces 
+            // elimino el elemento padre, sino lanzo error
+            $.ajax("<?php echo url_for("@borrar_evento_ajax")?>",{
+                method: "POST",
+                data: { id : evtId },
+                dataType: "json",
+                success: function(response){
+                    if(response.errors){
+                        $("div.error-modal")
+                            .on('show.bs.modal', function (event) {
+                                var modal = $(this);
+                                modal.find('.modal-title').text("Disculpe, hubo un error :(");
+                                modal.find('.modal-body').text(response.errors.msg);
+                            })
+                            .modal();
+                    } else {
+                        // Saco elemento padre (y a mi mismo) del DOM
+                        boton.parent().remove();
+                    }
+                }
+            });
+            
         });
 
         

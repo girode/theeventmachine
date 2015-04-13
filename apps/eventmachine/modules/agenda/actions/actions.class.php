@@ -120,5 +120,51 @@ class agendaActions extends sfActions {
 
         
     }
+    
+    
+    /*
+     * Borra el evento según su id. Se fija que el evento pertenezca al usuario
+     * logueado.
+     * Nota: Esta funcion no soporta el borrado multiple, y si el evento 
+     * pertenece a distintas agendas
+     * 
+     * TODO: Contemplar si el evento pertenece a distintas agendas
+     *
+     */
+    
+    public function executeBorrarEventoAjax($request) {
+        if ($request->isXmlHttpRequest()) {
+            if($request->isMethod(sfRequest::POST)) {
+                
+                $response = array();
+                $agenda_id = $this->getUser()->getAgenda()->getId();
+                $evento_id = $request->getParameter("id");
+                
+                // buscar evento por id 
+                // intentar borrado
+                $q = Doctrine_Query::create()
+                        ->delete('AgendaEvento')
+                        ->addWhere('evento_id = ?', $evento_id)
+                        ->whereIn('agenda_id', array($agenda_id));
+
+                
+//                $response["query"] = $q->getSqlQuery();
+//                $response["param"] = $q->getParams();
+                
+                $deleted = $q->execute();
+                
+                if($deleted !== 1) {
+                    $response['errors'] = array();
+                    $response['errors']['msg'] = "Hubo un error al borrar el evento. Por favor, intente de nuevo en unos segundos";
+                } else {
+                    $evento = Doctrine::getTable("Evento")->findOneById($evento_id);
+                    $evento->delete();
+                }
+                
+                $this->getResponse()->setContentType('application/json');
+                return $this->renderText(json_encode($response));
+            }
+        }
+    }
 
 }

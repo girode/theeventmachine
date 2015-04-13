@@ -3,6 +3,9 @@
 
 
 #Ajax rules:
+borrar_evento_ajax:
+  url: agenda/borrarEventoAjax
+  param: { module: agenda, action: borrarEventoAjax }
 
 get_eventos_ajax:
   url:   /getEventosAjax

@@ -87,6 +87,8 @@ div#eventList {
     overflow: auto;
 }
 
+/* Manejo el boton que elimina eventos */
+
 div#eventList > a.list-group-item > button.removeEventButton {
     position:absolute;
     top: 10%;
@@ -97,6 +99,34 @@ div#eventList > a.list-group-item:hover > button.removeEventButton {
     visibility: visible;
 }
 
+/* Estilo del boton agregar evento */
 
+div#new-event-form-div > button {
+    font-weight: bold;
+}
 
+/* Estilo de la ventana modal de error */
+.error-modal {
+    
+}
+    
+.error-modal-dialog {
+    
+}
+        
+.error-modal-content {
+    
+}
 
+.error-modal-header {
+    
+}
+                
+.error-modal-title {
+    
+}
+
+.error-modal-body {
+    
+}
+            
