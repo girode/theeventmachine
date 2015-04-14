@@ -3,6 +3,7 @@ html {
 }
 body {
     height: 100%;
+    overflow: hidden;
 }
 
 /* Estilo del jumbotron (pagina principal) */
