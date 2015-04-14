@@ -3,6 +3,10 @@
 
 
 #Ajax rules:
+get_next_event_page_ajax:
+  url:   /getNextEventPageAjax
+  param: { module: agenda, action: getNextEventPageAjax }    
+    
 borrar_evento_ajax:
   url: agenda/borrarEventoAjax
   param: { module: agenda, action: borrarEventoAjax }

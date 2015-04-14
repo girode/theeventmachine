@@ -15,10 +15,32 @@ div.jumbotron-main {
     color: #fff;
 }
 
+div.jumbotron-main > div.wrapper {
+    background-color: transparent;
+    background-image: url("../img/white-op60.png");
+    background-repeat: repeat;
+    /* https://css-tricks.com/transparency-in-web-design/ */
+    background: hsla(0,0,0,0.5);  /* 50% transparent */
+    height: 100%;
+}
 
-div.jumbotron-main > div.container {
+
+div.jumbotron-main > div.wrapper > div.container {
     position: relative;
-    top: 30%;
+    top: 10%;
+}
+
+/* http://stackoverflow.com/questions/787839/resize-image-proportionally-with-css */
+div.jumbotron-main > div.wrapper > div.container div.row > div.col-md-6 > img {
+    /*Notice that width:50% will resize it to 50% of the available space
+    for the image, while max-width:50% will resize the image to 50% of its 
+    natural size. This is very important to take into account when using this
+    rules for mobile web design, so for mobile web design max-width 
+    should always be used.*/
+    max-width: 80%; 
+    height: auto;
+    width: 90%;
+    display: inline-block;
 }
 
 
@@ -27,6 +49,7 @@ div.jumbotron-main h2,
 div.jumbotron-main p
 {
     text-align: left;
-    text-shadow: 1px 1px 0 #FFF;
-    color: #777;
+    color: #000;
 }
+
+

@@ -18,18 +18,19 @@ class EventoTable extends Doctrine_Table
     }
     
        
-    public function findByAgendaIdQuery($agenda_id)
+    public function findByAgendaIdQuery($agenda_id, $limit)
     {
         return $this->createQuery('e')
                     ->innerJoin('e.Agendas a')
                     ->where('a.id = ?', $agenda_id)
-                    ->orderBy("e.inicio DESC");   
+                    ->orderBy("e.inicio DESC")
+                    ->limit($limit);   
     }
     
-    public function findByAgendaId($agenda_id, $hydrationMode = DOCTRINE::HYDRATE_RECORD)
+    public function findByAgendaId($agenda_id, $limit = 10, $hydrationMode = DOCTRINE::HYDRATE_RECORD)
     { 
         return $this->findByAgendaIdQuery($agenda_id)
-                    ->execute(array(), $hydrationMode);
+                    ->execute(array(), $limit, $hydrationMode);
         
     }
     

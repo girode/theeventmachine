@@ -82,12 +82,14 @@
         
         //TODO: Implementar un scroller y la paginacion correspondiente
         
-//        $('.some_element').bind('scroll', function(){
-//            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
-//               var new_div = '<div class="new_block"></div>';
-//               $('.main_content').append(new_div.load('/path/to/script.php'));
-//            }
-//         });
+        $('div#ticker').bind('scroll', function(){
+            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
+               var new_div = '<div class="new_block">aaa</div>';
+//               new_div.load('/path/to/script.php')
+               
+               $('.main_content').append(new_div);
+            }
+         });
         
         
 

@@ -46,7 +46,7 @@ class agendaActions extends sfActions {
                 
     }
 
-    public function executeGetEventosAjax($request) {
+    public function executeGetEventosAjax(sfWebRequest $request) {
         if ($request->isXmlHttpRequest()) {
 
             $start = $request->getParameter('start');
@@ -123,8 +123,7 @@ class agendaActions extends sfActions {
 
         
     }
-    
-    
+        
     /*
      * Borra el evento según su id. Se fija que el evento pertenezca al usuario
      * logueado.
@@ -135,7 +134,7 @@ class agendaActions extends sfActions {
      *
      */
     
-    public function executeBorrarEventoAjax($request) {
+    public function executeBorrarEventoAjax(sfWebRequest $request) {
         if ($request->isXmlHttpRequest()) {
             if($request->isMethod(sfRequest::POST)) {
                 
@@ -168,6 +167,27 @@ class agendaActions extends sfActions {
                 return $this->renderText(json_encode($response));
             }
         }
+    }
+    
+    public function getNextEventPageAjax(sfWebRequest $request){
+        $left_off_id = $request->getParameter("id");
+        $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
+        
+        $q = Doctrine::getTable('Evento')
+                    ->createQuery('e')
+                    ->innerJoin('e.Agendas a')
+                    ->where('a.id = ?', $agenda_usuario_id)
+                    ->andWhere('e.id < ?', $left_off_id)
+                    ->orderBy('e.id DESC')
+                    ->limit(10);
+        
+        $html = "";
+        
+        foreach($q->execute() as $result){
+            $html .= $this->getPartial("evento", $result);
+        }
+        
+        return $html;
     }
 
 }
