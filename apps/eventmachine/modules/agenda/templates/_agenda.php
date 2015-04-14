@@ -82,12 +82,22 @@
         
         //TODO: Implementar un scroller y la paginacion correspondiente
         
-        $('div#ticker').bind('scroll', function(){
+        $('div#eventList').on('scroll', function(){
             if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
-               var new_div = '<div class="new_block">aaa</div>';
-//               new_div.load('/path/to/script.php')
                
-               $('.main_content').append(new_div);
+               var lastLink  = $(this).find("a:last-child > input#evento_id"),
+                   eventList = $(this);
+               
+               $.get('<?php echo url_for("agenda/getNextEventPageAjax");?>',
+                     {id: lastLink.val()},
+                     function(data){
+                        if(data.c > 0)
+                            $('div#eventList').append(data.links);
+                        else 
+                            eventList.off('scroll');
+                     }
+               );
+               
             }
          });
         

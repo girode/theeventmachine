@@ -169,9 +169,11 @@ class agendaActions extends sfActions {
         }
     }
     
-    public function getNextEventPageAjax(sfWebRequest $request){
+    public function executeGetNextEventPageAjax(sfWebRequest $request){
         $left_off_id = $request->getParameter("id");
         $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
+        $count = 0;
+        $response = array();
         
         $q = Doctrine::getTable('Evento')
                     ->createQuery('e')
@@ -182,12 +184,17 @@ class agendaActions extends sfActions {
                     ->limit(10);
         
         $html = "";
+        $results = $q->execute();
         
-        foreach($q->execute() as $result){
-            $html .= $this->getPartial("evento", $result);
+        foreach($results as $result){
+            $html .= $this->getPartial("evento", array('evento' => $result));
         }
         
-        return $html;
+        $response['c'] = $results->count();
+        $response['links'] = $html;
+        
+        $this->getResponse()->setContentType('application/json');
+        return $this->renderText(json_encode($response));
     }
 
 }
