@@ -63,10 +63,8 @@
     </nav>
     
     <!-- Begin page content -->
-    <div class="container">
-        <?php echo $sf_content ?>
-    </div>
-
+    <?php echo $sf_content ?>
+    
     <footer class="footer">
       <div class="container">
         <p class="text-muted">Por Gabriel Rode. 2015</p>
