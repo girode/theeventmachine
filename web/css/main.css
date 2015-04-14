@@ -14,3 +14,19 @@ div.jumbotron-main {
     text-align: center;
     color: #fff;
 }
+
+
+div.jumbotron-main > div.container {
+    position: relative;
+    top: 30%;
+}
+
+
+div.jumbotron-main h1,
+div.jumbotron-main h2,
+div.jumbotron-main p
+{
+    text-align: left;
+    text-shadow: 1px 1px 0 #FFF;
+    color: #777;
+}

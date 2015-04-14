@@ -12,9 +12,18 @@
 
 <div class="jumbotron jumbotron-main">
   <div class="container">
-    <h1>The Event Machine</h1>
-    <h2>Scheduling System</h2>
-    <p>Agendas made simple</p>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="well">
+                <h1>aaa</h1>
+              </div>
+          </div>
+          <div class="col-md-6">
+                <h1>The Event Machine</h1>
+                <h2>Scheduling System</h2>
+                <p>Agendas made simple</p>  
+          </div>
+      </div>  
   </div>
 </div>
 
