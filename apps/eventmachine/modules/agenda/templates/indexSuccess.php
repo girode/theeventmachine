@@ -1,8 +1,11 @@
 <?php use_stylesheet('fullcalendar.min.css') ?>
 <?php use_javascript('fullcalendar.min.js') ?>
+<?php use_helper('I18N') ?>
 
 <div class="page-header">
     <h1>Agenda de <?php echo $usuario?></h1>
+<!--    TODO: Verificar cultura-->
+    <?php // echo __("hola"); ?>
 </div>
 
 <?php include_partial('agenda', array('eventos' => $eventos)); ?>

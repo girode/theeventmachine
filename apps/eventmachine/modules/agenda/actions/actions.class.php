@@ -16,6 +16,9 @@ class agendaActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
+        
+        // TODO: Probar y configurar cultura
+//        $this->getUser()->setCulture("en_US");
         $this->usuario = $this->getUser()->getName();
         
         $evento = new Evento();

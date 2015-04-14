@@ -80,21 +80,14 @@
         });
 
         
-        // initialize the event scroller
-        $("div#eventList").jscroll();
-
-//        $('#eventFormModal').on('show.bs.modal', function (event) {
-//            
-//            // var button = $(event.relatedTarget) // Button that triggered the modal
-//            // var recipient = button.data('whatever') // Extract info from data-* attributes
-//            var modal = $(this);
-//            
-//            // Si esta vacio
-//            if( !( $.trim( modal.find('.modal-body').html() ).length ) ) { 
-//                modal.find('.modal-body').load("<?php // echo url_for('@get_formulario_evento_ajax')?>");
+        //TODO: Implementar un scroller y la paginacion correspondiente
+        
+//        $('.some_element').bind('scroll', function(){
+//            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
+//               var new_div = '<div class="new_block"></div>';
+//               $('.main_content').append(new_div.load('/path/to/script.php'));
 //            }
-//            
-//        });
+//         });
         
         
 

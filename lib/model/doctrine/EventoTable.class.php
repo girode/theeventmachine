@@ -28,9 +28,8 @@ class EventoTable extends Doctrine_Table
     
     public function findByAgendaId($agenda_id, $hydrationMode = DOCTRINE::HYDRATE_RECORD)
     { 
-        return $this
-                ->findByAgendaIdQuery($agenda_id)
-                ->execute(array(), $hydrationMode);
+        return $this->findByAgendaIdQuery($agenda_id)
+                    ->execute(array(), $hydrationMode);
         
     }
     
