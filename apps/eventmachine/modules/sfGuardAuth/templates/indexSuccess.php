@@ -15,7 +15,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                      <img src="../img/calendar-512.png" class="img-responsive" alt="Agenda">
+                    <?php echo image_tag('/img/calendar-512.png', array("alt" => "Agenda", "class" => "img-responsive")) ?>
+                    <!-- Me genera:
+                        <img src="../img/calendar-512.png" class="img-responsive" alt="Agenda">
+                    -->
                 </div>
                 <div class="col-md-6">
                       <h1>The Event Machine</h1>
