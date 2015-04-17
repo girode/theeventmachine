@@ -10,8 +10,8 @@
  * @property string $titulo
  * @property boolean $diario
  * @property string $descripcion
- * @property date $inicio
- * @property date $fin
+ * @property timestamp $inicio
+ * @property timestamp $fin
  * @property boolean $repetir
  * @property string $url
  * @property boolean $editable
@@ -23,8 +23,8 @@
  * @method string              getTitulo()        Returns the current record's "titulo" value
  * @method boolean             getDiario()        Returns the current record's "diario" value
  * @method string              getDescripcion()   Returns the current record's "descripcion" value
- * @method date                getInicio()        Returns the current record's "inicio" value
- * @method date                getFin()           Returns the current record's "fin" value
+ * @method timestamp           getInicio()        Returns the current record's "inicio" value
+ * @method timestamp           getFin()           Returns the current record's "fin" value
  * @method boolean             getRepetir()       Returns the current record's "repetir" value
  * @method string              getUrl()           Returns the current record's "url" value
  * @method boolean             getEditable()      Returns the current record's "editable" value
@@ -80,13 +80,13 @@ abstract class BaseEvento extends sfDoctrineRecord
              'notnull' => true,
              'length' => 255,
              ));
-        $this->hasColumn('inicio', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('inicio', 'timestamp', null, array(
+             'type' => 'timestamp',
              'notnull' => true,
              'comment' => 'The date/time an event begins',
              ));
-        $this->hasColumn('fin', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('fin', 'timestamp', null, array(
+             'type' => 'timestamp',
              'notnull' => false,
              'comment' => 'The exclusive date/time an event ends. It is the moment immediately after the event has ended. For example, if the last full day of an event is Thursday, the exclusive end of the event will be 00:00:00 on Friday!',
              ));

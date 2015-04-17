@@ -1,15 +1,19 @@
 Evento:
   EventoGabo:
-    inicio: "2015-04-06"   
+    inicio: "2015-04-06 18:00:00"
+    inicio: "2015-04-06 19:00:00"
     titulo: "Evento de Gabriel"
     descripcion: "Evento de Prueba"
+    diario: false
     Agendas: [AgendaGabo]
 # Starts at the beginning of the line (no whitespace before)
 <?php for ($i = 1; $i <= 30; $i++): ?>
   evento_<?php echo $i ?>:
-    inicio: "2015-04-<?php echo $i ?>"    
+    inicio: "2015-04-<?php echo $i ?> 00:00:00"    
+    fin:    "2015-04-<?php echo $i ?> 24:00:00"    
     titulo: "Evento <?php echo $i ?>"
     descripcion: "Evento <?php echo $i ?>"
+    diario: true
     Agendas: [AgendaGabo]
 <?php endfor ?>
   #Jueves 1 de enero:  
@@ -17,106 +21,124 @@ Evento:
     inicio: "2015-01-01"    
     titulo: "Año Nuevo"
     descripcion: "Año Nuevo"
+    diario: true
     Agendas: [AgendaGral]  
   # Lunes 16 y 17 de febrero: Carnaval  
   FeriadoCarnaval1:
     inicio: "2015-02-16"   
     titulo: "Carnaval"
     descripcion: "Carnaval"
+    diario: true
     Agendas: [AgendaGral]  
   # Lunes 16 y 17 de febrero: Carnaval  
   FeriadoCarnaval2:
     inicio: "2015-02-17"   
     titulo: "Carnaval"
     descripcion: "Carnaval"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 23 de marzo: Feriado Puente Turístico  (aprobado por Decreto 1768/2013)  
   FeriadoPteTuristico1:
     inicio: "2015-03-23"    
     titulo: "Feriado Puente Turístico"
     descripcion: "Feriado Puente Turístico"
+    diario: true
     Agendas: [AgendaGral]
   # Martes 24 de marzo: Día Nacional de la Memoria por la Verdad y la Justicia  
   FeriadoDesaparecidos:
     inicio: "2015-03-24" 
     titulo: "Día Nacional de la Memoria por la Verdad y la Justicia"
     descripcion: "Día Nacional de la Memoria por la Verdad y la Justicia"
+    diario: true
     Agendas: [AgendaGral]
   # Jueves 2 de abril: Día del Veterano y de los Caídos en la Guerra de Malvinas  
   FeriadoMalvinas:
     inicio: "2015-04-02"    
     titulo: "Día del Veterano y de los Caídos en la Guerra de Malvinas"
     descripcion: "Día del Veterano y de los Caídos en la Guerra de Malvinas"
+    diario: true
     Agendas: [AgendaGral]
   # Viernes 3 de abril: Viernes Santo  
   FeriadoSanto:
     inicio: "2015-04-03"   
     titulo: "Viernes Santo"
     descripcion: "Viernes Santo"
+    diario: true
     Agendas: [AgendaGral]
   # Viernes 1 de mayo: Día del Trabajador  
   FeriadoAnioNuevo:
     inicio: "2015-05-01"   
     titulo: "Día del Trabajador"
     descripcion: "Día del Trabajador"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 25 de mayo: Día de la Revolución de Mayo  
   FeriadoRevolucionMayo:
     inicio: "2015-05-25"
     titulo: "Día de la Revolución de Mayo"
     descripcion: "Día de la Revolución de Mayo"
+    diario: true
     Agendas: [AgendaGral]
   # Sábado 20 de junio: Paso a la Inmortalidad del General Manuel Belgrano  
   FeriadoInmortalidadBelgrano:
     inicio: "2015-06-20"   
     titulo: "Paso a la Inmortalidad del General Manuel Belgrano"
     descripcion: "Paso a la Inmortalidad del General Manuel Belgrano"
+    diario: true
     Agendas: [AgendaGral]  
   # Jueves 9 de julio: Día de la Independencia  
   FeriadoIndependencia:
     inicio: "2015-07-09"   
     titulo: "Día de la Independencia"
     descripcion: "Día de la Independencia"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 17 de agosto: Fallecimiento del General San Martín  
   FeriadoInmortalidadSanMartin:
     inicio: "2015-08-17"   
     titulo: "Fallecimiento del General San Martín"
     descripcion: "Fallecimiento del General San Martín"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 12 de octubre: Día del Respeto a la Diversidad Cultural  
   FeriadoDiversidadCultural:
     inicio: "2015-10-12"   
     titulo: "Día del Respeto a la Diversidad Cultural"
     descripcion: "Día del Respeto a la Diversidad Cultural"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 23 de noviembre: Feriado Trasladable (aprobado por Decreto 1584/2010)  
   FeriadoTrasladable:
     inicio: "2015-11-23"   
     titulo: "Feriado Trasladable (aprobado por Decreto 1584/2010)"
     descripcion: "Feriado Trasladable (aprobado por Decreto 1584/2010)"
+    diario: true
     Agendas: [AgendaGral]
   # Lunes 7 de diciembre: Feriado Puente Turístico (aprobado por Decreto 1768/2013)  
   FeriadoPteTuristico2:
     inicio: "2015-12-07"
     titulo: "Feriado Puente Turístico (aprobado por Decreto 1768/2013)"
     descripcion: "Feriado Puente Turístico (aprobado por Decreto 1768/2013)"
+    diario: true
     Agendas: [AgendaGral]
   # Martes 8 de diciembre: Inmaculada Concepción de María  
   FeriadoMaria:
     inicio: "2015-12-08"   
     titulo: "Inmaculada Concepción de María"
     descripcion: "Inmaculada Concepción de María"
+    diario: true
     Agendas: [AgendaGral]
   # Jueves 25 de diciembre: Navidad
   FeriadoAnioNuevo:
     inicio: "2015-12-25"
     titulo: "Navidad"
     descripcion: "Navidad"
+    diario: true
     Agendas: [AgendaGral]
   # Viernes 20 de noviembre (pasa al lunes 23 de noviembre): Día de la Soberanía Nacional
   FeriadoAnioNuevo:
     inicio: "2015-11-23"   
     titulo: "Día de la Soberanía Nacional"
     descripcion: "Día de la Soberanía Nacional"
+    diario: true
     Agendas: [AgendaGral]   

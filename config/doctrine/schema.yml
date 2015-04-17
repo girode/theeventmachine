@@ -22,11 +22,11 @@ Evento:
       type: string(255)
       notnull: true
     inicio:  
-      type: date
+      type: timestamp
       notnull: true
       comment: "The date/time an event begins"
     fin:  
-      type: date
+      type: timestamp
       notnull: false
       comment: "The exclusive date/time an event ends. It is the moment immediately after the event has ended. For example, if the last full day of an event is Thursday, the exclusive end of the event will be 00:00:00 on Friday!"
     repetir:

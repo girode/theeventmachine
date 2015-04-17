@@ -16,7 +16,6 @@ class agendaActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        
         // TODO: Probar y configurar cultura
 //        $this->getUser()->setCulture("en_US");
         $this->usuario = $this->getUser()->getName();
@@ -65,11 +64,11 @@ class agendaActions extends sfActions {
                     ->andWhere('e.inicio >= ?', $start)
                     ->andWhere('e.inicio <= ?', $end);
 
-            $response = $q->fetchArray();
-
+            $json_eventos = $q->execute(array(), 'json_event_object');
+            
             $this->getResponse()->setContentType('application/json');
 
-            return $this->renderText(json_encode($response));
+            return $this->renderText($json_eventos);
         }
     }
 

@@ -11,5 +11,12 @@ class ProjectConfiguration extends sfProjectConfiguration
         'sfDoctrinePlugin',
         'sfDoctrineGuardPlugin'
     ));
+    
   }
+  
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    $manager->registerHydrator('json_event_object', 'JSONEventObjectHydrator');
+  }
+  
 }
