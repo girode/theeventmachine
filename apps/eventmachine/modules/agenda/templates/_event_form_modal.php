@@ -40,6 +40,7 @@
                         console.log(data.errors[i]);
                     }
                 } else {
+                    // TODO: revisar ejecuccion
                     $("div#ticker.list-group > div.list-group").prepend(data.newHTML);
                     $("#calendar").fullCalendar('renderEvent', {
                         title: data.evento.titulo,

@@ -1,5 +1,7 @@
 <?php use_stylesheet('fullcalendar.min.css') ?>
+<?php use_stylesheets_for_form($form) ?>
 <?php use_javascript('fullcalendar.min.js') ?>
+<?php use_javascripts_for_form($form)?>
 <?php use_helper('I18N') ?>
 
 <div class="container">
