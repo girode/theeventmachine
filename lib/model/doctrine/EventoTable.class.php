@@ -23,6 +23,7 @@ class EventoTable extends Doctrine_Table
         return $this->createQuery('e')
                     ->innerJoin('e.Agendas a')
                     ->where('a.id = ?', $agenda_id)
+//                    ->orderBy("e.inicio DESC, e.id DESC")
                     ->orderBy("e.inicio DESC")
                     ->limit($limit);   
     }

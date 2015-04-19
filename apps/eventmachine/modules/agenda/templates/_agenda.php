@@ -11,6 +11,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        // Page setUp
+        $('div#eventList').scrollTop(0);
+        
         // initialize the calendar...
 
         $("#calendar").fullCalendar({
@@ -77,11 +80,12 @@
         $('div#eventList').on('scroll', function(){
             if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
                
-               var lastLink  = $(this).find("a:last-child > input#evento_id"),
-                   eventList = $(this);
+               var eventList  = $(this),
+                   lastInputId  = eventList.find("a:last-child > input#evento_id"),
+                   lastInputFecha  = eventList.find("a:last-child > input#evento_inicio");
                
                $.get('<?php echo url_for("agenda/getNextEventPageAjax");?>',
-                     {id: lastLink.val()},
+                     {id: lastInputId.val(), fecha: lastInputFecha.val()},
                      function(data){
                         if(data.c > 0)
                             $('div#eventList').append(data.links);

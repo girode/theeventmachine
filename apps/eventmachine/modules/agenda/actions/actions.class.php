@@ -30,6 +30,7 @@ class agendaActions extends sfActions {
         $this->eventos = Doctrine::getTable('Evento')
                 ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
         
+        
 //        $agendaGeneral = Doctrine::getTable('Agenda')
 //                    ->findOneByNombre("Agenda General");
 //
@@ -45,6 +46,8 @@ class agendaActions extends sfActions {
                 
     }
 
+    
+    // Recupera los eventos para mostrarlos en el calendario
     public function executeGetEventosAjax(sfWebRequest $request) {
         if ($request->isXmlHttpRequest()) {
 
@@ -170,16 +173,17 @@ class agendaActions extends sfActions {
     
     public function executeGetNextEventPageAjax(sfWebRequest $request){
         $left_off_id = $request->getParameter("id");
+        $fecha = $request->getParameter("fecha");
+        
         $agenda_usuario_id = $this->getUser()->getAgenda()->getId();
-        $count = 0;
         $response = array();
         
         $q = Doctrine::getTable('Evento')
                     ->createQuery('e')
                     ->innerJoin('e.Agendas a')
                     ->where('a.id = ?', $agenda_usuario_id)
-                    ->andWhere('e.id < ?', $left_off_id)
-                    ->orderBy('e.id DESC')
+                    ->andWhere('e.inicio < ?', $fecha)
+                    ->orderBy("e.inicio DESC")
                     ->limit(10);
         
         $html = "";
