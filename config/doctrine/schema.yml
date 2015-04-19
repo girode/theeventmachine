@@ -5,11 +5,7 @@ Evento:
       type: integer(4)
       autoincrement: true
       primary: true
-      notnull: true
-    identificador: 
-      type: integer
-      notnull: false
-      comment: "Uniquely identifies the given event. Different instances of repeating events should all have the same id."      
+      notnull: true      
     titulo:  
       type: string(255)
       notnull: true
