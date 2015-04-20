@@ -40,12 +40,8 @@
                         console.log(data.errors[i]);
                     }
                 } else {
-                    // TODO: revisar ejecuccion
                     $("div#ticker.list-group > div.list-group").prepend(data.newHTML);
-                    $("#calendar").fullCalendar('renderEvent', {
-                        title: data.evento.titulo,
-                        start: data.evento.inicio
-                    });
+                    $("#calendar").fullCalendar('renderEvent', data.evento);
                     $('#eventFormModal').modal('hide');
                 }
             }, 'json');

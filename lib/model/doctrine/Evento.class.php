@@ -19,4 +19,21 @@ class Evento extends BaseEvento
     public function getInicioFormateado() {
         return date('d/m/Y', strtotime($this->getInicio()));
     }
+    
+    // Agrega a la representacion de array, nuevos campos cuyos 
+    // nombres estan en ingles (los usa fullCalendar)
+    public function toFullCalendarArray() {
+        $arr = $this->toArray();
+        
+        $arr['title']  = $arr['titulo'];
+        $arr['allDay'] = $arr['diario'];
+        $arr['start']  = date('Y-m-d\TH:i:s', strtotime($arr['inicio'])); 
+        $arr['end']    = date('Y-m-d\TH:i:s', strtotime($arr['fin'])); 
+        
+        return $arr;
+    }
+    
+    
+    
+    
 }

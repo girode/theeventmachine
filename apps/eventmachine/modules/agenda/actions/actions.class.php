@@ -105,7 +105,7 @@ class agendaActions extends sfActions {
                 $evento->save();
                 
                 $response['status']  = 'ok';
-                $response['evento']  = $evento->toArray();
+                $response['evento']  = $evento->toFullCalendarArray();
                 $response['newHTML'] = $this->getPartial('evento', array("evento" => $evento));
                 
             } else {
