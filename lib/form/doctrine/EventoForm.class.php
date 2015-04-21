@@ -47,9 +47,84 @@ class EventoForm extends BaseEventoForm {
         ));
         
         
-        $this->widgetSchema->addFormFormatter('bootstrap', new sfWidgetFormSchemaFormatterTwitterBootstrap($this->widgetSchema));
-        $this->widgetSchema->setFormFormatterName('bootstrap');
+//        $this->widgetSchema->addFormFormatter('bt_two_cols', new sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols($this->widgetSchema));
+//        $this->widgetSchema->setFormFormatterName('bt_two_cols');
+        
+        $this->widgetSchema->addFormFormatter('aaa', new sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols($this->widgetSchema));
+        $this->widgetSchema->setFormFormatterName('aaa');
         
     }
+    
+//    public function getFieldsByRequired() {
+//        
+//    }
+    
+    public function renderRequiredFields(){
+        $output = '';
+        $fields = $this->getRequiredFields();
+        
+        $requiredFields = $fields['required'];
+                
+        foreach($this as $k => $field){
+            if($field instanceof sfFormFieldSchema || $field->isHidden()){
+                continue;
+            }
+                         
+            $widgetName = $this->widgetSchema->generateName($k);
+            if(in_array($widgetName, $requiredFields)) $output .= $field->renderRow();
+        }
+
+        return $output;
+    }
+    
+    protected function generateCheckboxes($checkBoxes = array()) {
+        $retStr = '<div class="form-group">'. '<div class="col-sm-7 col-sm-offset-5">';
+        
+        foreach($checkBoxes as $checkBox){
+            $name = $this->getWidgetSchema()->generateName($checkBox['name']);
+            
+            $retStr .= "<label class=\"checkbox-inline\" for=\"".  $checkBox['widget']->generateId($name) ."\">".
+                           $this[$checkBox['name']]. ' ' . $checkBox['name'] . 
+                       "</label>";
+        }
+        
+        $retStr .= "</div>" . "</div>";
+        
+        return $retStr;
+    }
+    
+    public function renderNonRequiredFields(){
+        $output = '';
+        $fields = $this->getRequiredFields();
+        $checkBoxes = array();
+        
+        $nonRequiredFields = $fields['non_required'];
+                
+        foreach($this as $k => $field){
+            if($field instanceof sfFormFieldSchema || $field->isHidden()){
+                continue;
+            }
+            
+            $widget = $field->getWidget();
+            if($widget instanceof sfWidgetFormInputCheckbox){
+                $checkBoxes[] = array(
+                    'name'   => $k,
+                    'widget' => $widget
+                );
+                continue;
+            }
+            
+            $widgetName = $this->widgetSchema->generateName($k);
+                         
+            if(in_array($widgetName, $nonRequiredFields)) $output .= $field->renderRow();
+        }
+        
+        // genero los widget de checkbox de otra manera
+        $output .= $this->generateCheckboxes($checkBoxes); 
+        
+        return $output;
+    }
+    
+    
 
 }

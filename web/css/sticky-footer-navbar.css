@@ -46,7 +46,7 @@ Esto implica que el div "row" será tan alto como lo sea su div hijo más alto
 (y que forme parte del flujo de la pagina)
 */
 
-.row {
+div#main.row {
     display: table;
 }
 
@@ -55,7 +55,7 @@ Hace que los divs hijos (las filas del layout de bootstrap) se comporten
 como celdas de tabla, se expanden para ocupar todo el espacio disponible
 */
 
-.row [class*="col-"] {
+div#main.row [class*="col-"] {
     float: none;
     display: table-cell;
     vertical-align: top;
@@ -128,4 +128,9 @@ div#new-event-form-div > button {
 
 .error-modal-body {
     
+}
+
+/* Campos obligatorios de los formularios */
+form label.required {
+    color: red;
 }

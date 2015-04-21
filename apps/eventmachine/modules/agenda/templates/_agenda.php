@@ -1,4 +1,4 @@
-<div class="row">
+<div id="main" class="row">
     <div class="col-md-9" id="calendar"></div>
     <div class="col-md-3 list-group" id="ticker">
         <div id="eventList">
@@ -26,11 +26,14 @@
         
         var createButton = $(
         "<div id=\"new-event-form-div\" data-toggle=\"tooltip\"\">" + 
-            "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#eventFormModal\">+" +
-        "</button></div>");
+            "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#eventFormModal\">" +
+                "<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> " +
+                "Crear nuevo evento" +
+            "</button>" +
+        "</div>");
         
         createButton.tooltip({
-            title: "Crear Evento"
+            title: "Agrega un nuevo evento al calendario"
         });
         
         $("div.fc-toolbar > div.fc-right").append(createButton);

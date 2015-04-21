@@ -4,8 +4,8 @@
  */
 class sfWidgetFormSchemaFormatterTwitterBootstrap extends sfWidgetFormSchemaFormatter
 {
-    private $labelRowSize = 3, $fieldRowSize = 5, $helpRowSize = 4;
-    private $formControlWidgets = array('sfWidgetFormInputText', 'sfWidgetFormInputPassword');
+    protected $labelRowSize = 3, $fieldRowSize = 5, $helpRowSize = 4;
+    protected $formControlWidgets = array('sfWidgetFormInputText', 'sfWidgetFormInputPassword', 'sfWidgetFormTextarea');
     
     protected
 //        $errorListFormatInARow = "<p class=\"help-block\">%errors%</p>\n",
