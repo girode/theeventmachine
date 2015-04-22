@@ -81,10 +81,10 @@ class EventoForm extends BaseEventoForm {
         $retStr = '<div class="form-group">'. '<div class="col-sm-offset-2 col-sm-10">';
         
         foreach($checkBoxes as $checkBox){
-            $name = $this->getWidgetSchema()->generateName($checkBox['name']);
+            $name = $checkBox->getName();
             
-            $retStr .= "<label class=\"checkbox-inline\" for=\"".  $checkBox['widget']->generateId($name) ."\">".
-                           $this[$checkBox['name']]. ' ' . $checkBox['name'] . 
+            $retStr .= "<label class=\"checkbox-inline\" for=\"".  $checkBox->renderId() ."\">".
+                           $this[$name]. ' ' . ucfirst($name) . 
                        "</label>";
         }
         
@@ -111,10 +111,7 @@ class EventoForm extends BaseEventoForm {
             
             $widget = $field->getWidget();
             if($widget instanceof sfWidgetFormInputCheckbox){
-                $checkBoxes[] = array(
-                    'name'   => $k,
-                    'widget' => $widget
-                );
+                $checkBoxes[] = $field;
                 continue;
             }
             
