@@ -1,5 +1,5 @@
 <div id="eventFormModal" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         
         <div class="modal-content">
             
@@ -13,7 +13,7 @@
                     <?php echo $form->renderHiddenFields() ?>
                         <div class="container-fluid">
                             <div class="row">        
-                                <div class="col-lg-6">                                    
+                                <div class="col-lg-6" style="border-right:1px solid #000">                                    
                                     <div class="form-horizontal">
                                         <?php echo $form->renderRequiredFields() ?>
                                     </div>   

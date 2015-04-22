@@ -78,7 +78,7 @@ class EventoForm extends BaseEventoForm {
     }
     
     protected function generateCheckboxes($checkBoxes = array()) {
-        $retStr = '<div class="form-group">'. '<div class="col-sm-7 col-sm-offset-5">';
+        $retStr = '<div class="form-group">'. '<div class="col-sm-offset-2 col-sm-10">';
         
         foreach($checkBoxes as $checkBox){
             $name = $this->getWidgetSchema()->generateName($checkBox['name']);
@@ -99,7 +99,11 @@ class EventoForm extends BaseEventoForm {
         $checkBoxes = array();
         
         $nonRequiredFields = $fields['non_required'];
-                
+            
+        $ff = $this->widgetSchema->getFormFormatter();
+        $ff->setlabelRowSize(2)
+           ->setFieldRowSize(10);
+        
         foreach($this as $k => $field){
             if($field instanceof sfFormFieldSchema || $field->isHidden()){
                 continue;

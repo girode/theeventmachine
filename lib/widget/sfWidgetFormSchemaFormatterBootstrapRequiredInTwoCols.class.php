@@ -3,8 +3,22 @@
 class sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols extends sfWidgetFormSchemaFormatterTwitterBootstrap
 {
     protected $requiredLabelClass = 'required';
-    protected $labelRowSize = 5, $fieldRowSize = 7;
+    protected $labelRowSize = 4, $fieldRowSize = 8;
 
+    public function setlabelRowSize($size) {
+        $this->labelRowSize = $size;
+        
+        return $this;
+    }
+    
+    public function setFieldRowSize($size) {
+        $this->fieldRowSize = $size;
+        
+        return $this;
+    }
+    
+    
+    
     private function addRequiredClass($name, &$attributes = array()){
         // loop up to find the "required_fields" option
         $widget = $this->widgetSchema;
