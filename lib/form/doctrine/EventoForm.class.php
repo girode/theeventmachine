@@ -50,7 +50,7 @@ class EventoForm extends BaseEventoForm {
 //        $this->widgetSchema->addFormFormatter('bt_two_cols', new sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols($this->widgetSchema));
 //        $this->widgetSchema->setFormFormatterName('bt_two_cols');
         
-        $this->widgetSchema->addFormFormatter('aaa', new sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols($this->widgetSchema));
+        $this->widgetSchema->addFormFormatter('aaa', new sfWidgetFormSchemaFormatterBSEventoForm($this->widgetSchema));
         $this->widgetSchema->setFormFormatterName('aaa');
         
     }
@@ -78,17 +78,21 @@ class EventoForm extends BaseEventoForm {
     }
     
     protected function generateCheckboxes($checkBoxes = array()) {
-        $retStr = '<div class="form-group">'. '<div class="col-sm-offset-2 col-sm-10">';
+        $retStr = 
+                '<div class="form-group">'. 
+                '<div class="col-sm-12" style="margin-top: 7%;">';
         
         foreach($checkBoxes as $checkBox){
             $name = $checkBox->getName();
             
-            $retStr .= "<label class=\"checkbox-inline\" for=\"".  $checkBox->renderId() ."\">".
+            $retStr .= "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".
                            $this[$name]. ' ' . ucfirst($name) . 
-                       "</label>";
+                       "</label>";    
         }
         
-        $retStr .= "</div>" . "</div>";
+        $retStr .= 
+                "</div>" .
+                "</div>";
         
         return $retStr;
     }
@@ -99,10 +103,6 @@ class EventoForm extends BaseEventoForm {
         $checkBoxes = array();
         
         $nonRequiredFields = $fields['non_required'];
-            
-        $ff = $this->widgetSchema->getFormFormatter();
-        $ff->setlabelRowSize(2)
-           ->setFieldRowSize(10);
         
         foreach($this as $k => $field){
             if($field instanceof sfFormFieldSchema || $field->isHidden()){
