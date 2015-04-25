@@ -4,15 +4,16 @@
  */
 class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatter
 {
-    // protected $labelRowSize = 3, $fieldRowSize = 5, $helpRowSize = 4;
+    
     protected $formControlWidgets = array('sfWidgetFormInputText', 'sfWidgetFormInputPassword', 'sfWidgetFormTextarea');
     protected $requiredLabelClass = 'required';
+    protected $helpPrefix = 'help_';
+    protected $helpId     = '';
     
     protected
 //        $errorListFormatInARow = "<p class=\"help-block\">%errors%</p>\n",
         $errorRowFormatInARow = "%error% ",
         $namedErrorRowFormatInARow = "%name%: %error% ",
-//        $helpFormat = '<p class="help-block col-sm-">%help%</p>',
         $decoratorFormat = "%content%";
     
 
@@ -27,9 +28,21 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
                 "</div>\n";
     }
     
+    public function getHelpId(){
+        return $this->helpId;
+    }
+    
+    public function setHelpId($newHelpId){
+        return $this->helpId = $newHelpId;
+    }
+    
+    public function generateHelpId($id){
+        return $this->setHelpId($this->helpPrefix . $id);
+    }
+    
     public function getHelpFormat() {
         return '<span'.
-                 ' class="glyphicon glyphicon-search"'.
+                 ' class="glyphicon glyphicon-question-sign"'.
                  ' aria-hidden="true"'.
                  ' data-toggle="tooltip"'.
                  ' data-placement="top"'.
@@ -38,6 +51,9 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
                 '</span>';
     }
     
+    public function formatHelp($help) {
+        return strtr(parent::formatHelp($help), array('%help_field_id%' => $this->getHelpId()));        
+    }
     
     public function getSpecialRowFormat() {
         return "<div class=\"form-group %row_class%\">\n".
@@ -69,6 +85,13 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
 
     public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
     {
+        $matches = array();
+        $pattern = '/id="(\w+)"/';
+        preg_match($pattern, $field, $matches);
+        
+        // Usado por parent::formatRow y formatHelp
+        $this->generateHelpId($matches[1]);
+        
         $row = parent::formatRow(
             $label,
             $field,
@@ -76,10 +99,11 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
             $help,
             $hiddenFields
         );
-
+        
         return strtr($row, array(
             '%row_class%' => count($errors) ? ' has-error' : '',
         ));
+        
         
     }
 

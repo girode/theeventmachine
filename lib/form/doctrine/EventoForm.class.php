@@ -10,9 +10,6 @@
  */
 class EventoForm extends BaseEventoForm {
 
-    protected $helpPrefix = 'help_'; 
-    
-    
     protected function configurarWidgets() {
         $this->widgetSchema['descripcion'] = new sfWidgetFormTextarea();
         $this->widgetSchema['inicio']      = new sfWidgetFormBootstrapDatePicker();
@@ -64,39 +61,36 @@ class EventoForm extends BaseEventoForm {
         
     }
     
-    private function fillHelpId($field, $row){
-        return strtr($row, array(
-            '%help_field_id%' => $this->helpPrefix . $field->renderId(),
-        ));
+    protected function renderCheckBox(sfFormField $checkBox, sfWidgetFormSchemaFormatter $formFormatter = null){
+        $name = $checkBox->getName();
+        $helpText = $formFormatter->getWidgetSchema()->getHelp($name);
+        
+        if(null === $formFormatter)
+            $formFormatter = $this->getWidgetSchema()->getFormFormatter();
+        
+        $formFormatter->generateHelpId($checkBox->renderId());
+        
+        return  "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".   
+                    $this[$name]. ' ' . ucfirst($name) .' '. $formFormatter->formatHelp($helpText) .
+                "</label>";
     }
     
     protected function generateCheckboxes($checkBoxes = array()) {
-        $retStr = 
-                '<div class="form-group">'. 
-                '<div class="col-sm-12" style="margin-top: 7%;">';
+        $formFormatter = $this->widgetSchema->getFormFormatter();
+        
+        $retStr = '<div class="form-group">'. "\n". 
+                  '<div class="col-sm-12" style="margin-top: 7%;">' . "\n";
         
         foreach($checkBoxes as $checkBox){
-            $name = $checkBox->getName();
-            
-            $widget = "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".
-                           $this[$name]. ' ' . ucfirst($name) .' '. $this->widgetSchema->getFormFormatter()->getHelpFormat() .
-                       "</label>";    
-            
-            $widget = $this->fillHelpId($checkBox, $widget);
-            
-            $retStr .= strtr($widget, array(
-                '%help%' => $this->widgetSchema->getHelp($name),
-            ));
-            
+            $retStr .= $this->renderCheckBox($checkBox, $formFormatter) . "\n";
         }
         
-        
-        $retStr .= 
-                "</div>" .
-                "</div>";
+        $retStr .= "</div>" . "\n" .
+                   "</div>";
         
         return $retStr;
     }
+
     
     protected function renderFields($fields, &$checkBoxes = array()) {
         $output = '';
@@ -106,16 +100,16 @@ class EventoForm extends BaseEventoForm {
                 continue;
             }
             
-            $widget = $field->getWidget();
-            if($widget instanceof sfWidgetFormInputCheckbox){
+            if($field->getWidget() instanceof sfWidgetFormInputCheckbox){
                 $checkBoxes[] = $field;
                 continue;
             }
             
             $widgetName = $this->widgetSchema->generateName($k);
                          
-            if(in_array($widgetName, $fields)) 
-                $output .= $this->fillHelpId($field, $field->renderRow());
+            if(in_array($widgetName, $fields)){
+                $output .= $field->renderRow();
+            } 
         }
 
         return $output;
@@ -149,13 +143,14 @@ class EventoForm extends BaseEventoForm {
 //    }
 
     public function renderJavascript() {
-
+        $ff = $this->widgetSchema->getFormFormatter();
+        
         $js = '<script type="text/javascript">';        
         $js .= '$(function() {' . "\n";
         
         foreach ($this as $field) {
             if(!$field->isHidden())
-                $js .= "\t\t". '$("#' . $this->helpPrefix . $field->renderId() . '").tooltip();' . "\n";
+                $js .= "\t\t". '$("#' . $ff->generateHelpId($field->renderId()) . '").tooltip();' . "\n";
         }
         
         $js .= '}); ' . "\n";
