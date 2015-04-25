@@ -9,6 +9,8 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
     protected $requiredLabelClass = 'required';
     protected $helpPrefix = 'help_';
     protected $helpId     = '';
+    protected $errorPrefix = 'error_';
+    protected $errorId     = '';
     
     protected
 //        $errorListFormatInARow = "<p class=\"help-block\">%errors%</p>\n",
@@ -26,6 +28,15 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
                     "%help%\n".
                     "%hidden_fields%\n".
                 "</div>\n";
+    }
+    
+    public function setErrorId($newErrorId){
+        return $this->errorId = $newErrorId;
+    }
+    
+    public function generateErrorId($id){
+//        return $this->setErrorId($this->errorPrefix . $id);
+        return $this->errorPrefix . $id;
     }
     
     public function getHelpId(){

@@ -111,8 +111,12 @@ class agendaActions extends sfActions {
             } else {
                 
                 foreach ($this->form->getErrorSchema() as $name => $error) {
+                    $id = $this->form[$name]->renderId();
+                    
                     $response['errors'][] = array(
-                        'field' => $name,
+                        'field_name' => $name,
+                        'field_id'   => $id,
+                        'error_id'   => $this->form->getWidgetSchema()->getFormFormatter()->generateErrorId($id),
                         'message' => $error->getMessage(),
                     );
                 }

@@ -138,22 +138,37 @@ class EventoForm extends BaseEventoForm {
         return $output;
     }
     
-//    public function getJavaScripts() {
-//        return array_merge(parent::getJavaScripts(), array('/js/evento_form.js'));
-//    }
+    public function getJavaScripts() {
+        return array_merge(parent::getJavaScripts(), array('/js/evento_form.js'));
+    }
 
     public function renderJavascript() {
         $ff = $this->widgetSchema->getFormFormatter();
+        $errorIds = array();
         
         $js = '<script type="text/javascript">';        
         $js .= '$(function() {' . "\n";
         
         foreach ($this as $field) {
-            if(!$field->isHidden())
-                $js .= "\t\t". '$("#' . $ff->generateHelpId($field->renderId()) . '").tooltip();' . "\n";
+            if(!$field->isHidden()){
+                $id = $field->renderId();
+                
+                $js .= "\t\t". '$("#' . $ff->generateHelpId($id) . '").tooltip();' . "\n";
+                $errorIds[$id] = $ff->generateErrorId($id);
+            }
         }
         
-        $js .= '}); ' . "\n";
+        $excludedItems  = '.glyphicon-calendar,';
+        $excludedItems .= '.input-group-addon,';
+        $excludedItems .= '.input-group,';
+        $excludedItems .= 'span#help_evento_diario,';
+        $excludedItems .= 'span#help_evento_repetir,';
+        $excludedItems .= 'span#help_evento_editable';
+        
+                
+        $js .= "\t\t". '$("form#formAltaEvento span:not('.$excludedItems.')").addFieldStatus( {errorIds: ' . json_encode($errorIds) . '} )';
+        
+        $js .= "});\n";
         
         $js .= '</script>';
 

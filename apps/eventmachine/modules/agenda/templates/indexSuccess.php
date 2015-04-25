@@ -5,11 +5,11 @@
 <?php use_helper('I18N') ?>
 
 <div class="container">
-<!--    <div class="page-header">
-        <h1>Agenda de <?php //echo $usuario?></h1>
-        TODO: Verificar cultura
+    <div class="page-header">
+        <h1 id="agenda-header">Agenda de <?php echo $usuario?></h1>
+    </div>
+<!--        TODO: Verificar cultura-->
         <?php // echo __("hola"); ?>
-    </div>-->
     
     <?php include_partial('agenda', array('eventos' => $eventos)); ?>
     <?php include_partial('event_form_modal', array('form' => $form)); ?>
