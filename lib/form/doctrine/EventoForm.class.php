@@ -10,6 +10,8 @@
  */
 class EventoForm extends BaseEventoForm {
 
+    protected $helpPrefix = 'help_'; 
+    
     
     protected function configurarWidgets() {
         $this->widgetSchema['descripcion'] = new sfWidgetFormTextarea();
@@ -46,35 +48,26 @@ class EventoForm extends BaseEventoForm {
             'editable',
         ));
         
-        
-//        $this->widgetSchema->addFormFormatter('bt_two_cols', new sfWidgetFormSchemaFormatterBootstrapRequiredInTwoCols($this->widgetSchema));
-//        $this->widgetSchema->setFormFormatterName('bt_two_cols');
+        $this->widgetSchema->setHelps(array(
+            'titulo' => 'Ingrese el titulo del evento',
+            'descripcion' => 'Ingrese la descripcion del evento',   
+            'inicio' => 'Ingrese la fecha de inicio del evento',        
+            'fin' => 'Ingrese la fecha de fin del evento', 
+            'url'=> 'Ingrese una URL asociada al evento',           
+            'diario' => 'Si el evento ocurre durante el dia en vez de a una hora especifica, marque aquí',        
+            'repetir' => 'Si el evento se repite marque este checkbox',       
+            'editable' => 'Si el evento es editable, por favor tilde la marca',
+        ));
         
         $this->widgetSchema->addFormFormatter('aaa', new sfWidgetFormSchemaFormatterBSEventoForm($this->widgetSchema));
         $this->widgetSchema->setFormFormatterName('aaa');
         
     }
     
-//    public function getFieldsByRequired() {
-//        
-//    }
-    
-    public function renderRequiredFields(){
-        $output = '';
-        $fields = $this->getRequiredFields();
-        
-        $requiredFields = $fields['required'];
-                
-        foreach($this as $k => $field){
-            if($field instanceof sfFormFieldSchema || $field->isHidden()){
-                continue;
-            }
-                         
-            $widgetName = $this->widgetSchema->generateName($k);
-            if(in_array($widgetName, $requiredFields)) $output .= $field->renderRow();
-        }
-
-        return $output;
+    private function fillHelpId($field, $row){
+        return strtr($row, array(
+            '%help_field_id%' => $this->helpPrefix . $field->renderId(),
+        ));
     }
     
     protected function generateCheckboxes($checkBoxes = array()) {
@@ -85,10 +78,18 @@ class EventoForm extends BaseEventoForm {
         foreach($checkBoxes as $checkBox){
             $name = $checkBox->getName();
             
-            $retStr .= "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".
-                           $this[$name]. ' ' . ucfirst($name) . 
+            $widget = "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".
+                           $this[$name]. ' ' . ucfirst($name) .' '. $this->widgetSchema->getFormFormatter()->getHelpFormat() .
                        "</label>";    
+            
+            $widget = $this->fillHelpId($checkBox, $widget);
+            
+            $retStr .= strtr($widget, array(
+                '%help%' => $this->widgetSchema->getHelp($name),
+            ));
+            
         }
+        
         
         $retStr .= 
                 "</div>" .
@@ -97,12 +98,8 @@ class EventoForm extends BaseEventoForm {
         return $retStr;
     }
     
-    public function renderNonRequiredFields(){
+    protected function renderFields($fields, &$checkBoxes = array()) {
         $output = '';
-        $fields = $this->getRequiredFields();
-        $checkBoxes = array();
-        
-        $nonRequiredFields = $fields['non_required'];
         
         foreach($this as $k => $field){
             if($field instanceof sfFormFieldSchema || $field->isHidden()){
@@ -117,8 +114,29 @@ class EventoForm extends BaseEventoForm {
             
             $widgetName = $this->widgetSchema->generateName($k);
                          
-            if(in_array($widgetName, $nonRequiredFields)) $output .= $field->renderRow();
+            if(in_array($widgetName, $fields)) 
+                $output .= $this->fillHelpId($field, $field->renderRow());
         }
+
+        return $output;
+    }
+    
+    
+    public function renderRequiredFields(){
+        $fields = $this->getRequiredFields();
+        $requiredFields = $fields['required'];
+        
+        return $this->renderFields($requiredFields);
+    }
+    
+    
+    
+    public function renderNonRequiredFields(){
+        $checkBoxes = array();
+        $fields = $this->getRequiredFields();
+        $nonRequiredFields = $fields['non_required'];
+        
+        $output = $this->renderFields($nonRequiredFields, $checkBoxes);
         
         // genero los widget de checkbox de otra manera
         $output .= $this->generateCheckboxes($checkBoxes); 
@@ -126,6 +144,25 @@ class EventoForm extends BaseEventoForm {
         return $output;
     }
     
-    
+//    public function getJavaScripts() {
+//        return array_merge(parent::getJavaScripts(), array('/js/evento_form.js'));
+//    }
+
+    public function renderJavascript() {
+
+        $js = '<script type="text/javascript">';        
+        $js .= '$(function() {' . "\n";
+        
+        foreach ($this as $field) {
+            if(!$field->isHidden())
+                $js .= "\t\t". '$("#' . $this->helpPrefix . $field->renderId() . '").tooltip();' . "\n";
+        }
+        
+        $js .= '}); ' . "\n";
+        
+        $js .= '</script>';
+
+        return $js;
+    }
 
 }

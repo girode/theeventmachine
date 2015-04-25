@@ -27,6 +27,8 @@
                         </div>        
                     </form>        
                 </div>
+                <?php echo $form->renderJavascript() ?>
+            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <input class="btn btn-primary" type="submit" value="Guardar">

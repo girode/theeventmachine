@@ -12,10 +12,44 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
 //        $errorListFormatInARow = "<p class=\"help-block\">%errors%</p>\n",
         $errorRowFormatInARow = "%error% ",
         $namedErrorRowFormatInARow = "%name%: %error% ",
-        $helpFormat = '<p class="help-block col-sm-">%help%</p>',
+//        $helpFormat = '<p class="help-block col-sm-">%help%</p>',
         $decoratorFormat = "%content%";
     
 
+    public function getNormalRowFormat() {
+        return "<div class=\"form-group %row_class%\">\n".
+                    "<div class=\"col-sm-12\">".
+                        "%label%\n".
+                        "%field%".
+                    "</div>\n".
+                    "%help%\n".
+                    "%hidden_fields%\n".
+                "</div>\n";
+    }
+    
+    public function getHelpFormat() {
+        return '<span'.
+                 ' class="glyphicon glyphicon-search"'.
+                 ' aria-hidden="true"'.
+                 ' data-toggle="tooltip"'.
+                 ' data-placement="top"'.
+                 ' id="%help_field_id%"'.
+                 ' title="%help%">'.
+                '</span>';
+    }
+    
+    
+    public function getSpecialRowFormat() {
+        return "<div class=\"form-group %row_class%\">\n".
+                    "<div class=\"col-sm-12\">".
+                        "%label% %help%\n".
+                        "%field%".
+                    "</div>\n".
+                    "%hidden_fields%\n".
+                "</div>\n";
+    }
+    
+    
     public function __construct(sfWidgetFormSchema $widgetSchema)
     {
         foreach ($widgetSchema->getFields() as $field) {
@@ -25,14 +59,8 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
             }
         }
         
-        $this->setRowFormat("<div class=\"form-group %row_class%\">\n".
-                                "<div class=\"col-sm-12\">".
-                                    "%label%\n".
-                                    "%field%".
-                                "</div>\n".
-                                "%help%\n".
-                                "%hidden_fields%\n".
-                            "</div>\n");
+        $this->setRowFormat($this->getSpecialRowFormat());
+        
         // $this->setErrorListFormatInARow("<p class=\"help-block col-sm-". $this->helpRowSize ."\">%errors%</p>\n");
         
         parent::__construct($widgetSchema);
@@ -52,6 +80,7 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
         return strtr($row, array(
             '%row_class%' => count($errors) ? ' has-error' : '',
         ));
+        
     }
 
     public function generateLabel($name, $attributes = array())
