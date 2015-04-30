@@ -158,6 +158,7 @@ class EventoForm extends BaseEventoForm {
             }
         }
         
+        /*
         $excludedItems  = '.glyphicon-calendar,';
         $excludedItems .= '.input-group-addon,';
         $excludedItems .= '.input-group,';
@@ -167,6 +168,7 @@ class EventoForm extends BaseEventoForm {
         
                 
         $js .= "\t\t". '$("form#formAltaEvento span:not('.$excludedItems.')").addFieldStatus( {errorIds: ' . json_encode($errorIds) . '} )';
+        */
         
         $js .= "});\n";
         

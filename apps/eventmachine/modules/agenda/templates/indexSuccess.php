@@ -5,8 +5,8 @@
 <?php use_helper('I18N') ?>
 
 <div class="container">
-    <div class="page-header">
-        <h1 id="agenda-header">Agenda de <?php echo $usuario?></h1>
+    <div class="page-header" id="agenda-header">
+        <h1>Agenda de <?php echo $usuario?></h1>
     </div>
 <!--        TODO: Verificar cultura-->
         <?php // echo __("hola"); ?>

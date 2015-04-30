@@ -35,7 +35,7 @@
                 <li class="dropdown">
                   <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Options <span class="caret"></span></a>
                   <ul role="menu" class="dropdown-menu">
-                    <li><a href="#">Hide header</a></li>
+                    <li><a id="toggleHeaderAnchor" href="#!">Show/Hide header</a></li>
                     <li><a href="#">Edit user data</a></li>
                     <li><a href="#">Etc</a></li>
                     <li class="divider"></li>
