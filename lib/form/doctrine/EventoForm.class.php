@@ -23,8 +23,28 @@ class EventoForm extends BaseEventoForm {
         $this->validatorSchema['inicio']->setOption('date_format', $pattern);
         $this->validatorSchema['fin']->setOption('date_format', $pattern);
         
+        $this->validatorSchema->setPostValidator(
+            new sfValidatorCallback(array('callback' => array($this, 'checkFechas')))
+        );
+        
     }
     
+    public function checkFechas($validator, $values) {
+        
+        if(!empty($values['inicio']) && !empty($values['fin'])){
+            $start_time = new DateTime($values['inicio']); 
+            $end_time   = new DateTime($values['fin']);
+            
+            if ($start_time >= $end_time) {
+                throw new sfValidatorError($validator, 'La fecha de inicio '
+                        . 'del evento debe ser anterior a la fecha de fin');
+ 
+            }
+        }
+        
+        return $values;
+    }
+
     public function configure() {
         parent::configure();
         unset($this['id']);
@@ -63,15 +83,22 @@ class EventoForm extends BaseEventoForm {
     
     protected function renderCheckBox(sfFormField $checkBox, sfWidgetFormSchemaFormatter $formFormatter = null){
         $name = $checkBox->getName();
-        $helpText = $formFormatter->getWidgetSchema()->getHelp($name);
         
         if(null === $formFormatter)
             $formFormatter = $this->getWidgetSchema()->getFormFormatter();
         
+        $helpDescription = $formFormatter->getWidgetSchema()->getHelp($name);
+        
         $formFormatter->generateHelpId($checkBox->renderId());
         
+        $formattedName = $formFormatter->findName($checkBox);
+        
+        $help = strtr($formFormatter->formatHelp($helpDescription), array(
+            '%mandatory_field%' => $formFormatter->isMandatoryField($formattedName)? '' : '(opcional)'
+        ));
+        
         return  "<label class=\"col-sm-4\" for=\"".  $checkBox->renderId() ."\">".   
-                    $this[$name]. ' ' . ucfirst($name) .' '. $formFormatter->formatHelp($helpText) .
+                    $checkBox. ' ' . ucfirst($name) .' '. $help .
                 "</label>";
     }
     
@@ -144,7 +171,7 @@ class EventoForm extends BaseEventoForm {
 
     public function renderJavascript() {
         $ff = $this->widgetSchema->getFormFormatter();
-        $errorIds = array();
+//        $errorIds = array();
         
         $js = '<script type="text/javascript">';        
         $js .= '$(function() {' . "\n";
@@ -154,21 +181,9 @@ class EventoForm extends BaseEventoForm {
                 $id = $field->renderId();
                 
                 $js .= "\t\t". '$("#' . $ff->generateHelpId($id) . '").tooltip();' . "\n";
-                $errorIds[$id] = $ff->generateErrorId($id);
+//                $errorIds[$id] = $ff->generateErrorId($id);
             }
         }
-        
-        /*
-        $excludedItems  = '.glyphicon-calendar,';
-        $excludedItems .= '.input-group-addon,';
-        $excludedItems .= '.input-group,';
-        $excludedItems .= 'span#help_evento_diario,';
-        $excludedItems .= 'span#help_evento_repetir,';
-        $excludedItems .= 'span#help_evento_editable';
-        
-                
-        $js .= "\t\t". '$("form#formAltaEvento span:not('.$excludedItems.')").addFieldStatus( {errorIds: ' . json_encode($errorIds) . '} )';
-        */
         
         $js .= "});\n";
         

@@ -12,41 +12,52 @@
 function ValidationStatusIndicator (indicator, inputElem) {
     this.indicator   = indicator; // round div
     this.inputElem   = inputElem; 
-    this.status = "init";
+    this.status      = "init";
     
     this.indicator
-            .on( "trackValidationStatus.success", { statusIndicator: this }, this.statusValidCallback)
-            .on( "trackValidationStatus.error", { statusIndicator: this }, this.statusInvalidCallback);
+            .on( "trackValidationStatus.success", { statusIndicator: this }, this.beValid)
+            .on( "trackValidationStatus.error", { statusIndicator: this }, this.beInvalid);
 }
- 
-ValidationStatusIndicator.prototype.statusValidCallback = function(event, data) {
-    var stat = event.data.statusIndicator;
-    stat.indicator.css('background', 'green');
-};
-    
-ValidationStatusIndicator.prototype.statusInvalidCallback = function(event, data) {
-    var stat = event.data.statusIndicator;
-    
-    for(var i=0, c=data.errors.length; i<c; i++){
-
-        if(data.errors[i]['field_id'] === stat.inputElem.attr('id'))
-            stat.indicator.css('background', 'red');
-    }
-    
-};
  
 ValidationStatusIndicator.prototype.setStatus = function(newStatus) {
     this.status = newStatus;
     return this;
 };
 
-ValidationStatusIndicator.prototype.beInvalid = function() {
-    return this.setStatus("error").statusInvalidCallback(this);
+ValidationStatusIndicator.prototype.reset = function() {
+    this.indicator.tooltip('destroy');
+    return this.setStatus("init");
 };
 
-ValidationStatusIndicator.prototype.beValid = function() {
-    return this.setStatus("success").statusValidCallback(this);
+
+ValidationStatusIndicator.prototype.beInvalid = function(event, error_message) {
+    var stat = event.data.statusIndicator;
+    return stat.setStatus("error").statusInvalidCallback(stat, error_message);
 };
+
+ValidationStatusIndicator.prototype.beValid = function(event, data) {
+    var stat = event.data.statusIndicator;
+    return stat.setStatus("success").statusValidCallback(stat, data);
+};
+
+ValidationStatusIndicator.prototype.statusValidCallback = function(stat, data) {
+    stat.indicator.css('background', 'green');
+    
+    stat.indicator.tooltip('destroy');
+    
+    return stat;
+};
+    
+ValidationStatusIndicator.prototype.statusInvalidCallback = function(stat, error_message) {
+    stat.indicator.css('background', 'red');
+    
+    stat.indicator.tooltip({
+        title: error_message
+    });
+    
+    return stat;
+};
+
 
 (function ($) {
 
@@ -61,7 +72,8 @@ ValidationStatusIndicator.prototype.beValid = function() {
     // Plugin default options.
     defaultOptions = {
         onSuccess: function() {},
-        onError: function() {}
+        onError: function() {},
+        globalStatusIndicator: $('<div class="alert alert-danger" role="alert">').hide()
     };
 
     myPlugin = (function (options) {
@@ -70,7 +82,7 @@ ValidationStatusIndicator.prototype.beValid = function() {
             this.handler = handler;
 
             // plugin variables.
-            this.validationStatusIndicators = [];
+            this.validationStatusIndicators = {};
             
             // Extend default options.
             $.extend(true, this, defaultOptions, options);
@@ -102,38 +114,91 @@ ValidationStatusIndicator.prototype.beValid = function() {
             
         };
 
-        // Example API function.
+       
         myPlugin.prototype.augmentedPostFunc = function(plug) {
             return function (data, textStatus, jqXHR){
                 
+                var indicators = plug.validationStatusIndicators;
+                
                 if(plug.formHasErrors(data)){
-                    for (var i = 0, c = plug.validationStatusIndicators.length;
-                             i < c;
-                             i++) {
-                        plug.validationStatusIndicators[i].indicator.trigger( "trackValidationStatus.error", [ data ] );
+                    
+                    for(var fieldKey in indicators){
+                        if(data.errors[fieldKey]){
+                            indicators[fieldKey].indicator.trigger( 
+                                "trackValidationStatus.error" ,
+                                [ data.errors[fieldKey].message ] 
+                            );
+                        } else {
+                            indicators[fieldKey].indicator.trigger( "trackValidationStatus.success", [ data ] );
+                        }
+                    }
+                    
+                    // Deal with global errors
+                    if(plug.formHasGlobalErrors(data)){
+                        plug.hideGlobalStatusIndicator();
+                        plug.clearGlobalErrors();
+
+                        for(var i=0, c=data.errors.global.length; i<c; i++)
+                            plug.addGlobalError(data.errors.global[i]);
+
+                        plug.showGlobalStatusIndicator();
                     }
                     
                     plug.onError(data);
-                } else {
-                    for (var i = 0, c = plug.validationStatusIndicators.length;
-                             i < c;
-                             i++) {
-                        plug.validationStatusIndicators[i].indicator.trigger( "trackValidationStatus.success", [ data ] );
-                    }
                     
+                } else {
+                    
+                    plug.resetStatusIndicators();
                     plug.onSuccess(data);
                 }
                 
             };
         };
         
+        myPlugin.prototype.resetStatusIndicators = function () {
+            this.hideGlobalStatusIndicator();
+            this.clearGlobalErrors();
+            
+            for(var indicator in this.validationStatusIndicators){
+                this.validationStatusIndicators[indicator].reset();
+            }
+            
+            this.handler.get(0).reset();
+        };
+        
         myPlugin.prototype.formHasErrors = function (data) {
-            return data.errors.length;
+            return data.status === 'error';
+        };
+        
+        myPlugin.prototype.formHasGlobalErrors = function (data) {
+            return this.formHasErrors(data) && data.global;
+        };
+        
+        myPlugin.prototype.hideGlobalStatusIndicator = function () {
+            return this.globalStatusIndicator.hide();
+        };
+        
+        myPlugin.prototype.showGlobalStatusIndicator = function () {
+            return this.globalStatusIndicator.show();
+        };
+        
+        myPlugin.prototype.clearGlobalErrors = function () {
+            return this.globalStatusIndicator.empty();
+        };
+        
+        myPlugin.prototype.addGlobalError = function (error_text) {
+            return this.globalStatusIndicator
+                        .append('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>')
+                        .append('<span class="sr-only">Error: </span>')
+                        .append(document.createTextNode('  ' + error_text))
+                        .append("<br>");
         };
         
         // Main method.
         myPlugin.prototype.init = function () {
             var excluded = this.excludedItems;
+            
+            this.handler.prepend(this.globalStatusIndicator);
             
             var inputs = this.handler.find('input, textarea').not(excluded),
                 plug   = this;
@@ -142,12 +207,14 @@ ValidationStatusIndicator.prototype.beValid = function() {
                 
                 var inputElem = $(this), newDiv = plug.createStatusDiv(inputElem);
 
-                plug.validationStatusIndicators.push(new ValidationStatusIndicator (newDiv, inputElem));
+                plug.validationStatusIndicators[inputElem.attr('id')] = new ValidationStatusIndicator (newDiv, inputElem);
                 plug.addStatusDiv(newDiv, inputElem);
                 
             });
-    
+            
+            
         };
+
 
         myPlugin.prototype.createStatusDiv = function ($inputElem) {
             return $("<div>")
@@ -161,7 +228,11 @@ ValidationStatusIndicator.prototype.beValid = function() {
                     "vertical-align": "text-top",
                     "margin-left": "1%"
                 })
-                .attr('id', $inputElem.attr('id').replace('evento', 'error'));
+                .attr({
+                    'id': $inputElem.attr('id').replace('evento', 'error'),
+                    'data-toggle': "tooltip"
+                });
+        
         };
 
 

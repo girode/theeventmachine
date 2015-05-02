@@ -111,15 +111,33 @@ class agendaActions extends sfActions {
             } else {
                 
                 foreach ($this->form->getErrorSchema() as $name => $error) {
-                    $id = $this->form[$name]->renderId();
+                    // Skip global errors as they are appended as numeric keys 
+                    // on the error schema
+                    if(is_numeric($name)) continue;
                     
-                    $response['errors'][] = array(
-                        'field_name' => $name,
-                        'field_id'   => $id,
+                    $id = $this->form[$name]->renderId();
+
+                    $response['errors'][$id] = array(
                         'error_id'   => $this->form->getWidgetSchema()->getFormFormatter()->generateErrorId($id),
                         'message' => $error->getMessage(),
                     );
+                    
                 }
+                
+                
+                if($this->form->hasGlobalErrors()){
+                    
+                    $response['errors']['global'] = array();
+
+                    // La magia: 
+                    // http://rajeshmeniya.blogspot.com.ar/2012/11/get-all-error-messages-from-symfony-14.html
+                    foreach ($this->form->getGlobalErrors() as $error) {
+                        $response['errors']['global'][] = $error->getMessage();
+                    }  
+                    
+                }
+                
+//                $response['errors']['global'][] = 'error de testing';
                 
             }
             

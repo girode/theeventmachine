@@ -58,7 +58,7 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
                  ' data-toggle="tooltip"'.
                  ' data-placement="top"'.
                  ' id="%help_field_id%"'.
-                 ' title="%help%">'.
+                 ' title="%mandatory_field% %help%">'.
                 '</span>';
     }
     
@@ -88,20 +88,31 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
         
         $this->setRowFormat($this->getSpecialRowFormat());
         
-        // $this->setErrorListFormatInARow("<p class=\"help-block col-sm-". $this->helpRowSize ."\">%errors%</p>\n");
-        
         parent::__construct($widgetSchema);
     }
     
 
-    public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
-    {
+    private function findId($field) {
         $matches = array();
         $pattern = '/id="(\w+)"/';
         preg_match($pattern, $field, $matches);
         
-        // Usado por parent::formatRow y formatHelp
-        $this->generateHelpId($matches[1]);
+        return $matches[1];
+    }
+    
+    public function findName($field) {
+        $matches = array();
+        $pattern = '/name="(\w+\[\w+\])"/';
+        preg_match($pattern, $field, $matches);
+        
+        return $matches[1];
+    }
+    
+    
+    public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
+    {
+        // Usado por parent::formatRow y formatHelp 
+        $this->generateHelpId($this->findId($field));
         
         $row = parent::formatRow(
             $label,
@@ -113,8 +124,8 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
         
         return strtr($row, array(
             '%row_class%' => count($errors) ? ' has-error' : '',
+            '%mandatory_field%' => $this->isMandatoryField($this->findName($field))? '' : '(opcional)'
         ));
-        
         
     }
 
@@ -147,6 +158,12 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
                     $this->requiredLabelClass;
         }
     }
+    
+    public function isMandatoryField($fieldName){
+        $fields     = $this->widgetSchema->getOption('required_fields');
+        return in_array($fieldName, $fields['required']);
+    }
+    
     
     
 }
