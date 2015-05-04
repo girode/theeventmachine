@@ -53,7 +53,7 @@ class sfWidgetFormSchemaFormatterBSEventoForm extends sfWidgetFormSchemaFormatte
     
     public function getHelpFormat() {
         return '<span'.
-                 ' class="glyphicon glyphicon-question-sign"'.
+                 ' class="glyphicon glyphicon-info-sign"'.
                  ' aria-hidden="true"'.
                  ' data-toggle="tooltip"'.
                  ' data-placement="top"'.

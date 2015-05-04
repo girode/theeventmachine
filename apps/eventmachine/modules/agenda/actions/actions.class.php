@@ -20,10 +20,10 @@ class agendaActions extends sfActions {
 //        $this->getUser()->setCulture("en_US");
         $this->usuario = $this->getUser()->getName();
         
-        $evento = new Evento();
-        $evento->setInicio(date("Y-m-d"));
+//        $evento = new Evento();
+//        $evento->setInicio(date("d/m/Y H:i"));
         
-        $this->form = new EventoForm($evento, array(
+        $this->form = new EventoForm(null, array(
             "usuario-simple" => true
         ));
         

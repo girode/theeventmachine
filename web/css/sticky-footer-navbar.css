@@ -131,6 +131,11 @@ div#new-event-form-div > button {
 }
 
 /* Campos obligatorios de los formularios */
-form label.required {
+form#formAltaEvento label.required {
     color: red;
+}
+
+/*form help spans */
+form#formAltaEvento span[id^="help_"]{
+    color: blue;
 }

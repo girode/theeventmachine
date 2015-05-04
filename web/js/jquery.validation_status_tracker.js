@@ -13,6 +13,7 @@ function ValidationStatusIndicator (indicator, inputElem) {
     this.indicator   = indicator; // round div
     this.inputElem   = inputElem; 
     this.status      = "init";
+    this.oldColor    = this.indicator.css('color');
     
     this.indicator
             .on( "trackValidationStatus.success", { statusIndicator: this }, this.beValid)
@@ -26,6 +27,9 @@ ValidationStatusIndicator.prototype.setStatus = function(newStatus) {
 
 ValidationStatusIndicator.prototype.reset = function() {
     this.indicator.tooltip('destroy');
+    this.indicator.removeClass()
+                  .css('color', this.oldColor);
+          
     return this.setStatus("init");
 };
 
@@ -41,7 +45,8 @@ ValidationStatusIndicator.prototype.beValid = function(event, data) {
 };
 
 ValidationStatusIndicator.prototype.statusValidCallback = function(stat, data) {
-    stat.indicator.css('background', 'green');
+    stat.indicator.css('color', 'green')
+                  .attr("class", "glyphicon glyphicon-ok");
     
     stat.indicator.tooltip('destroy');
     
@@ -49,7 +54,8 @@ ValidationStatusIndicator.prototype.statusValidCallback = function(stat, data) {
 };
     
 ValidationStatusIndicator.prototype.statusInvalidCallback = function(stat, error_message) {
-    stat.indicator.css('background', 'red');
+    stat.indicator.css('color', 'red')
+                  .attr("class", "glyphicon glyphicon-remove");
     
     stat.indicator.tooltip({
         title: error_message
@@ -90,12 +96,15 @@ ValidationStatusIndicator.prototype.statusInvalidCallback = function(stat, error
             // Bind methods.
             this.update   = __bind(this.update, this);
             this.onSubmit = __bind(this.onSubmit, this);
+            this.onCancel = __bind(this.onCancel, this);
             this.init     = __bind(this.init, this);
             this.clear    = __bind(this.clear, this);
 
+            this.cancelElement = $(this.cancelSelector) || this.handler;
+
             // Listen to submit event
             this.handler.on('submit.trackValidationStatus', this.onSubmit);
-            
+            this.cancelElement.on('hide.bs.modal', this.onCancel);
         }
         
 
@@ -212,29 +221,24 @@ ValidationStatusIndicator.prototype.statusInvalidCallback = function(stat, error
                 
             });
             
-            
         };
 
-
+        
+        myPlugin.prototype.onCancel = function (event) {
+            this.resetStatusIndicators();
+        };        
+          
         myPlugin.prototype.createStatusDiv = function ($inputElem) {
-            return $("<div>")
-                .css({
-                    display: 'inline-block',
-                    width: '15px',
-                    height: '15px',
-                    background: '#FFF',
-                    border: "thin solid #000",
-                    "border-radius": "50%",
-                    "vertical-align": "text-top",
-                    "margin-left": "1%"
-                })
+
+            return $("<span>")
                 .attr({
                     'id': $inputElem.attr('id').replace('evento', 'error'),
-                    'data-toggle': "tooltip"
+                    'data-toggle': "tooltip",
+                    'data-placement': "top",
+                    'aria-hidden': "true"
                 });
-        
+            
         };
-
 
         myPlugin.prototype.parentIsDatetimePicker = function(parent){
             var parent_id = parent.attr('id'), ret = false;

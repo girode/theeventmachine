@@ -7,8 +7,11 @@ $(document).ready(function (){
             $("div#ticker > div#eventList").prepend(data.newHTML);
             $("#calendar").fullCalendar('renderEvent', data.evento);
             $('#eventFormModal').modal('hide');
-        }
+        },
+    
+        cancelSelector: 'div#eventFormModal.modal',
         
-    }); 
+    });
+    
 
 });
