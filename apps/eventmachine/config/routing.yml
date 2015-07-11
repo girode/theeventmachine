@@ -3,6 +3,11 @@
 
 
 #Ajax rules:
+    
+get_eventos_para_lista_ajax:
+  url:   agenda/getEventosParaListaAjax
+  param: { module: agenda, action: getEventosParaListaAjax }    
+    
 get_next_event_page_ajax:
   url:   /getNextEventPageAjax
   param: { module: agenda, action: getNextEventPageAjax }    

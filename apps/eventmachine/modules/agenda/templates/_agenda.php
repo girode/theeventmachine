@@ -1,19 +1,12 @@
 <div id="main" class="row">
     <div class="col-md-9" id="calendar"></div>
     <div class="col-md-3 list-group" id="ticker">
-        <div id="eventList">
-            <?php foreach($eventos as $evento): ?>
-                <?php include_partial("evento", array("evento" => $evento)); ?>
-            <?php endforeach; ?>
-        </div>
+        <div id="eventList"></div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        // Page setUp
-        $('div#eventList').scrollTop(0);
-        
         // initialize the calendar...
 
         $("#calendar").fullCalendar({
@@ -38,63 +31,13 @@
         
         $("div.fc-toolbar > div.fc-right").append(createButton);
 
-        /* Manejo el boton cerrar de cada evento */
+        //DOING: Implementar un scroller y la paginacion correspondiente
         
-        $( "div#eventList" ).on("click", "button", function( event ) {
-            event.preventDefault();
-            var boton = $(this);
-            var evtId = boton.siblings("input").val();
-            
-            // Lanzo ajax req para eliminar el evento. Si me da ok, entonces 
-            // elimino el elemento padre, sino lanzo error
-            $.ajax("<?php echo url_for("@borrar_evento_ajax")?>",{
-                method: "POST",
-                data: { id : evtId },
-                dataType: "json",
-                success: function(response){
-                    if(response.errors){
-                        $("div.error-modal")
-                            .on('show.bs.modal', function (event) {
-                                var modal = $(this);
-                                modal.find('.modal-title').text("Disculpe, hubo un error :(");
-                                modal.find('.modal-body').text(response.errors.msg);
-                            })
-                            .modal();
-                    } else {
-                        // Saco elemento padre (y a mi mismo) del DOM
-                        boton.parent().remove();
-                        
-                        // Elimino evento del calendario
-                        $("#calendar").fullCalendar( 'removeEvents' , evtId);
-                        
-                    }
-                }
-            });
-            
+        $('div#eventList').eventList({
+            initialEventsUrl: "<?php echo url_for("agenda/getEventosParaListaAjax");?>",
+            nextPageOfEventsUrl: "<?php echo url_for("agenda/getNextEventPageAjax");?>",
+            eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>",
         });
-
-        
-        //TODO: Implementar un scroller y la paginacion correspondiente
-        
-        $('div#eventList').on('scroll', function(){
-            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
-               
-               var eventList  = $(this),
-                   lastInputId  = eventList.find("a:last-child > input#evento_id"),
-                   lastInputFecha  = eventList.find("a:last-child > input#evento_inicio");
-               
-               $.get('<?php echo url_for("agenda/getNextEventPageAjax");?>',
-                     {id: lastInputId.val(), fecha: lastInputFecha.val()},
-                     function(data){
-                        if(data.c > 0)
-                            $('div#eventList').append(data.links);
-                        else 
-                            eventList.off('scroll');
-                     }
-               );
-               
-            }
-         });
         
         
 

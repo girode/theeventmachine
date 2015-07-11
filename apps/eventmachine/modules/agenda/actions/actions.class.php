@@ -27,8 +27,8 @@ class agendaActions extends sfActions {
             "usuario-simple" => true
         ));
         
-        $this->eventos = Doctrine::getTable('Evento')
-                ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
+//        $this->eventos = Doctrine::getTable('Evento')
+//                ->findByAgendaId($this->getUser()->getAgenda()->getId()); 
         
         
 //        $agendaGeneral = Doctrine::getTable('Agenda')
@@ -46,6 +46,30 @@ class agendaActions extends sfActions {
                 
     }
 
+    // Recupera los eventos para mostrarlos en la lista de eventos
+    public function executeGetEventosParaListaAjax(sfWebRequest $request) {
+        if ($request->isXmlHttpRequest()) {
+
+            $eventos = Doctrine::getTable('Evento')
+                ->findByAgendaId($this->getUser()->getAgenda()->getId());
+            
+            $arr_eventos = array();
+            
+            foreach($eventos as $evento){
+                $arr_eventos[] = array(
+                    'inicio_formateado' => $evento->getInicioFormateado(),
+                    'titulo' => $evento->getTitulo(),
+                    'descripcion' => $evento->getDescripcion(),
+                    'id' => $evento->getId(),
+                    'inicio' => $evento->getInicio()
+                );
+            }
+            
+            $this->getResponse()->setContentType('application/json');
+
+            return $this->renderText(json_encode($arr_eventos));
+        }
+    }
     
     // Recupera los eventos para mostrarlos en el calendario
     public function executeGetEventosAjax(sfWebRequest $request) {
@@ -208,15 +232,32 @@ class agendaActions extends sfActions {
                     ->orderBy("e.inicio DESC")
                     ->limit(10);
         
-        $html = "";
+        // $html = "";
         $results = $q->execute();
         
+        /*
         foreach($results as $result){
             $html .= $this->getPartial("evento", array('evento' => $result));
         }
         
-        $response['c'] = $results->count();
         $response['links'] = $html;
+        */
+        
+        $response['c'] = $results->count();
+        
+        $arr_eventos = array();
+            
+        foreach($results as $evento){
+            $arr_eventos[] = array(
+                'inicio_formateado' => $evento->getInicioFormateado(),
+                'titulo' => $evento->getTitulo(),
+                'descripcion' => $evento->getDescripcion(),
+                'id' => $evento->getId(),
+                'inicio' => $evento->getInicio()
+            );
+        }
+        
+        $response['eventos'] = $arr_eventos;
         
         $this->getResponse()->setContentType('application/json');
         return $this->renderText(json_encode($response));
