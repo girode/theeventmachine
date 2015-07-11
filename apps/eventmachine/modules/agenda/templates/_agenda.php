@@ -15,30 +15,42 @@
             }
         });
         
-        /* Manejo el boton de creacion de eventos */
+        /* Agrego botones custom al calendario */
         
         var createButton = $(
-        "<div id=\"new-event-form-div\" data-toggle=\"tooltip\"\">" + 
             "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#eventFormModal\">" +
                 "<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> " +
                 "Crear nuevo evento" +
-            "</button>" +
-        "</div>");
+            "</button>");
         
-        createButton.tooltip({
+        var createDiv = $("<div id=\"new-event-form-div\" data-toggle=\"tooltip\" class=\"form-group\">")
+                            .append(createButton);
+        
+        createDiv.tooltip({
             title: "Agrega un nuevo evento al calendario"
         });
+       
+        var searchButton = $("<input type='text' id='filterBtn' class='form-control input-sm' placeholder='Filtrar eventos'>");
         
-        $("div.fc-toolbar > div.fc-right").append(createButton);
+        // Agrego div con los nuevos botones
+
+        $("div.fc-toolbar > div.fc-right")
+            .append(createDiv)
+            .append(searchButton)
+            .addClass('form-inline');
+
 
         //DOING: Implementar un scroller y la paginacion correspondiente
         
-        $('div#eventList').eventList({
-            initialEventsUrl: "<?php echo url_for("agenda/getEventosParaListaAjax");?>",
-            nextPageOfEventsUrl: "<?php echo url_for("agenda/getNextEventPageAjax");?>",
-            eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>",
-        });
-        
+        $('div#eventList')
+            .eventList({
+                initialEventsUrl: "<?php echo url_for("agenda/getEventosParaListaAjax");?>",
+                nextPageOfEventsUrl: "<?php echo url_for("agenda/getNextEventPageAjax");?>",
+                eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>",
+            }).sieve({ 
+                itemSelector: "a.list-group-item",
+                searchInput: searchButton
+            });
         
 
     });
