@@ -1,0 +1,115 @@
+/* 
+    Created on : 12-jul-2015, 19:51:03
+    Author     : grode
+*/
+
+
+/* 
+Articulos que ayudaron:
+http://stackoverflow.com/questions/19695784/how-can-i-make-bootstrap-columns-all-the-same-height
+http://www.barelyfitz.com/screencast/html-training/css/positioning/
+http://alistapart.com/article/css-positioning-101
+http://stackoverflow.com/questions/5323177/absolute-vs-relative-position-width-height
+http://stackoverflow.com/questions/3049783/how-to-make-a-floated-div-100-height-of-its-parent?lq=1
+*/
+
+/*
+Hace que el div con clase "row", se comporte como una tabla al mostrarse.
+Esto implica que el div "row" será tan alto como lo sea su div hijo más alto
+(y que forme parte del flujo de la pagina)
+*/
+
+div#main.row {
+    display: table;
+}
+
+/*
+Hace que los divs hijos (las filas del layout de bootstrap) se comporten 
+como celdas de tabla, se expanden para ocupar todo el espacio disponible
+*/
+
+div#main.row [class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+}
+
+/*
+Con posicionamiento relativo, el div sigue formando parte del flujo del 
+documento, sin embargo la altura que toma "su sombra" (lo que esta aún en el layout)
+es la misma que la del calendario por las dos reglas que definí arriba
+
+Como consecuencia, la columna más alta es la del calendario, y la que 
+fijará el resto del alto de la página
+*/
+
+div#ticker.col-md-3.list-group {
+    position:relative;
+}
+
+/*
+Posiciono el listado de eventos "relativo" al ticker y hago que obtenga 
+un alto (height) calculado respecto del padre (el ticker), el cual es obtenido
+del calendario.
+*/
+
+div#eventList {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+/* Manejo el boton que elimina eventos */
+
+div#eventList > a.list-group-item > button.removeEventButton {
+    position:absolute;
+    top: 10%;
+    left: 90%;
+}
+
+div#eventList > a.list-group-item:hover > button.removeEventButton {
+    visibility: visible;
+}
+
+/* Estilo del boton agregar evento */
+
+div#new-event-form-div > button {
+    font-weight: bold;
+}
+
+/* Estilo de la ventana modal de error */
+.error-modal {
+    
+}
+    
+.error-modal-dialog {
+    
+}
+        
+.error-modal-content {
+    
+}
+
+.error-modal-header {
+    
+}
+                
+.error-modal-title {
+    
+}
+
+.error-modal-body {
+    
+}
+
+/* Campos obligatorios de los formularios */
+form#formAltaEvento label.required {
+    color: red;
+}
+
+/*form help spans */
+form#formAltaEvento span[id^="help_"]{
+    color: blue;
+}
+
