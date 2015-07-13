@@ -113,7 +113,6 @@ ValidationStatusIndicator.prototype.statusInvalidCallback = function(stat, error
             $.extend(true, this, options);
         };
 
-        // This timer ensures that layout is not continuously called as window is being dragged.
         myPlugin.prototype.onSubmit = function (event) {
             event.preventDefault();
             var $form = this.handler,

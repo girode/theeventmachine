@@ -45,12 +45,11 @@
                 .append(
                     "<ul class=\"dropdown-menu dropdown-menu-right\">" +
                         "<li class=\"dropdown-header\">Tiempo</li>" +
-                        "<li><a href=\"#\">Este Mes</a></li>" +
-                        "<li><a href=\"#\">Este Año</a></li>" +
-//                        "<li role=\"separator\" class=\"divider\"></li>" +
+                        "<li><a id=\"filterCurrentMonth\"href=\"#!\">Este Mes</a></li>" +
+                        "<li><a href=\"#!\">Este Año</a></li>" +
                         "<li class=\"dropdown-header\">Fuente</li>" +
-                        "<li><a href=\"#\">De Facebook</a></li>" +
-                        "<li><a href=\"#\">De GCalendar</a></li>" +
+                        "<li><a href=\"#!\">Facebook</a></li>" +
+                        "<li><a href=\"#!\">G Calendar</a></li>" +
                     "</ul>"
                 );        
         
@@ -68,19 +67,23 @@
             .append(searchDiv)
             .addClass('form-inline');
 
-
-        //DOING: Implementar un scroller y la paginacion correspondiente
-        
         $('div#eventList')
             .eventList({
                 initialEventsUrl: "<?php echo url_for("agenda/getEventosParaListaAjax");?>",
                 nextPageOfEventsUrl: "<?php echo url_for("agenda/getNextEventPageAjax");?>",
                 eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>",
-            }).sieve({ 
+            }).exsieve({ 
                 itemSelector: "a.list-group-item",
                 searchInput: filterInput
             });
-        
-
+            
+        $("a#filterCurrentMonth").toggleClick(function (){
+            $('div#eventList').exsieve("addToFilterList", "text", "/<?php echo date('m/Y')?>");    
+            $(this).addClass('activeEventFilter');
+        }, function(){
+            $('div#eventList').exsieve("removeFromFilterList", "text");
+            $(this).removeClass('activeEventFilter');
+        });    
+            
     });
 </script>

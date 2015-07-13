@@ -113,3 +113,6 @@ form#formAltaEvento span[id^="help_"]{
     color: blue;
 }
 
+a.activeEventFilter#filterCurrentMonth {
+    font-weight: bold;
+}
