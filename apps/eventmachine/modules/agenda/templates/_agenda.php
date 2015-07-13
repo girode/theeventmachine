@@ -71,7 +71,7 @@
             .eventList({
                 initialEventsUrl: "<?php echo url_for("agenda/getEventosParaListaAjax");?>",
                 nextPageOfEventsUrl: "<?php echo url_for("agenda/getNextEventPageAjax");?>",
-                eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>",
+                eraseEventUrl: "<?php echo url_for("@borrar_evento_ajax")?>"
             }).exsieve({ 
                 itemSelector: "a.list-group-item",
                 searchInput: filterInput
