@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [bootstrap.min.css, sticky-footer-navbar.css, columnas-aplicacion-principal.css]
 
-  javascripts:    [jquery-1.11.2.min.js, bootstrap.min.js, moment.min.js, fullcalendar.min.js, es.js, menu.js, jquery.validation_status_tracker.js, jquery.toggleClick.js, jquery.exsieve.js, event-list.js]
+  javascripts:    [jquery-1.11.2.min.js, bootstrap.min.js, moment.min.js, fullcalendar.js, es.js, menu.js, jquery.validation_status_tracker.js, jquery.toggleClick.js, jquery.exsieve.js, event-list.js, eventDashboardView.js]
 
   has_layout:     true
   layout:         layout

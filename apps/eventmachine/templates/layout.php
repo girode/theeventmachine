@@ -23,7 +23,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#" class="navbar-brand">The Event Machine</a>
+          <a href="#" class="navbar-brand">
+              The Event Machine
+<!--              <img alt="Brand" src="../img/calendar-512.png"/>-->
+          </a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav">

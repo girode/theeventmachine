@@ -12,7 +12,8 @@
         $("#calendar").fullCalendar({
             events: {
                 url: '<?php echo url_for('@get_eventos_ajax')?>'        
-            }
+            },        
+            defaultView: 'eventDashboard'
         });
         
         /* Agrego botones custom al calendario */
